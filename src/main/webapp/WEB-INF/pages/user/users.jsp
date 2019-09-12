@@ -20,23 +20,31 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>E-mail</th>
+        <th>Created At</th>
+        <th>Role</th>
         <th>Action</th>
     </tr>
     <c:forEach var="user" items="${userList}">
         <tr>
-            <td>${user.id}</td>
+            <td>
+                <a href="/user/${user.id}">${user.id}</a>
+            </td>
             <td>${user.firstName}</td>
             <td>${user.lastName}</td>
             <td>${user.email}</td>
+            <td>${user.createdAt}</td>
+            <td>${user.roles}</td>
             <td>
-                <a href="/edit/${user.id}">Edit</a>
+                <a href="/editUser/${user.id}">Edit</a>
                 |
-                <a href="/delete/${user.id}">Delete</a>
+                <a href="/deleteUser/${user.id}">Delete</a>
             </td>
         </tr>
     </c:forEach>
 </table>
 
-<a href="/add">Add dealer</a>
+<a href="/addUser">Add dealer</a>
+<br>
+<a href="/posts">Show posts</a>
 </body>
 </html>
