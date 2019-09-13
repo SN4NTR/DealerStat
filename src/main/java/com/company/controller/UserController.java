@@ -3,7 +3,6 @@ package com.company.controller;
 import com.company.model.Post;
 import com.company.model.User;
 import com.company.service.UserService;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,9 +38,6 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/user");
         modelAndView.addObject("user", user);
-
-//        List<Post> posts =
-//        modelAndView.addObject("post", )
         return modelAndView;
     }
 
@@ -65,6 +61,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         user.setRoles(userService.getById(user.getId()).getRoles());
+//        user.setPosts(userService.getById(user.getId()).getPosts());
         userService.updateUser(user);
         return modelAndView;
     }

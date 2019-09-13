@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -26,6 +27,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void addPost(Post post) {
+        post.setCreatedAt(new Date(new java.util.Date().getTime()));
         postDao.addPost(post);
     }
 

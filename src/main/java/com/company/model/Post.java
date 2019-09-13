@@ -20,4 +20,8 @@ public class Post {
 
     @Column(name = "created_at")
     private Date createdAt;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -19,6 +19,7 @@
         <th>ID</th>
         <th>Title</th>
         <th>Created At</th>
+        <th>Dealer ID</th>
         <th>Action</th>
     </tr>
     <c:forEach var="post" items="${postList}">
@@ -28,12 +29,11 @@
             </td>
             <td>${post.title}</td>
             <td>${post.createdAt}</td>
+            <td>${post.user.id}</td>
             <td>
-                <a href="/deletePost/${post.id}">Delete</a>
+                <a href="/editPost/${post.id}">Edit</a>
                 |
-
-
-
+                <a href="/deletePost/${post.id}">Delete</a>
             </td>
         </tr>
     </c:forEach>

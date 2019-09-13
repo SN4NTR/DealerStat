@@ -21,11 +21,13 @@
         <th>ID</th>
         <th>Title</th>
         <th>Created At</th>
+        <th>Dealer ID</th>
     </tr>
     <tr>
         <td>${post.id}</td>
         <td>${post.title}</td>
         <td>${post.createdAt}</td>
+        <td>${post.user.id}</td>
     </tr>
 </table>
 </body>

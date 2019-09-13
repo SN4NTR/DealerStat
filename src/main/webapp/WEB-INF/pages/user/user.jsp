@@ -13,7 +13,9 @@
     <link href="<c:url value="/res/style.css"/> " rel="stylesheet" type="text/css">
 </head>
 <body>
+
 <h1>Dealer Info</h1>
+
 <table>
     <tr>
         <th>ID</th>
@@ -30,5 +32,25 @@
         <td>${user.createdAt}</td>
     </tr>
 </table>
+
+<h1>Posts</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Created At</th>
+    </tr>
+    <c:forEach var="post" items="${user.posts}">
+        <tr>
+            <td>${post.id}</td>
+            <td>${post.title}</td>
+            <td>${post.createdAt}</td>
+        </tr>
+    </c:forEach>
+</table>
+
+<a href="/addPost/${user.id}">Add post</a>
+
 </body>
 </html>
