@@ -12,13 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class PostController {
 
     private PostService postService;
     private UserService userService;
+    private static int userIdBuffer;
 
     @Autowired
     public PostController(PostService postService, UserService userService) {
@@ -61,26 +65,31 @@ public class PostController {
     @RequestMapping(value = "/editPost", method = RequestMethod.POST)
     public ModelAndView editPost(@ModelAttribute("post") Post post) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:post/posts");
+        modelAndView.setViewName("redirect:/posts");
+        post.setUser(postService.getById(post.getId()).getUser());
         postService.updatePost(post);
         return modelAndView;
     }
 
     @RequestMapping(value = "/addPost/{id}", method = RequestMethod.GET)
     public ModelAndView addPost(@PathVariable("id") int id) {
-        Post post = new Post();
-        post.setUser(userService.getById(id));
+        userIdBuffer = id;
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("post/create");
-        modelAndView.addObject("post", post);
+        modelAndView.addObject("post", new Post());
         return modelAndView;
     }
 
     @RequestMapping(value = "/addPost", method = RequestMethod.POST)
     public ModelAndView addPost(@ModelAttribute("post") Post post) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/addPost");
+        User user = userService.getById(userIdBuffer);
+        post.setUser(user);
         postService.addPost(post);
+        Set<Post> posts = new HashSet<>();
+        posts.add(post);
+        user.setPosts(posts);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/posts");
         return modelAndView;
     }
 

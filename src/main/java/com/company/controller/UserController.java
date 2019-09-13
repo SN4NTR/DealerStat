@@ -61,7 +61,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         user.setRoles(userService.getById(user.getId()).getRoles());
-//        user.setPosts(userService.getById(user.getId()).getPosts());
+        user.setPosts(userService.getById(user.getId()).getPosts());
         userService.updateUser(user);
         return modelAndView;
     }

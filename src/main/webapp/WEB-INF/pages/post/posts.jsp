@@ -29,7 +29,7 @@
             </td>
             <td>${post.title}</td>
             <td>${post.createdAt}</td>
-            <td>${post.user.id}</td>
+            <td><a href="/user/${post.user.id}">${post.user.id}</a></td>
             <td>
                 <a href="/editPost/${post.id}">Edit</a>
                 |

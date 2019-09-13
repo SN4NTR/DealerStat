@@ -14,7 +14,6 @@
 <form action="/addPost" method="post">
     <label for="title">Title</label>
     <input type="text" name="title" id="title">
-    <input name="user" value="${post.user}">
     <input type="submit" value="Submit">
 </form>
 </body>
