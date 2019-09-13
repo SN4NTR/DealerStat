@@ -27,8 +27,42 @@
         <td>${post.id}</td>
         <td>${post.title}</td>
         <td>${post.createdAt}</td>
-        <td>${post.user.id}</td>
+        <td><a href="/user/${post.user.id}">${post.user.id}</a></td>
     </tr>
 </table>
+
+<c:if test="${!empty post.gameObjects}">
+    <h1>Game Objects</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Text</th>
+            <th>Status</th>
+            <th>Created at</th>
+            <th>Updated at</th>
+            <th>Action</th>
+        </tr>
+        <c:forEach var="gameObject" items="${post.gameObjects}">
+            <tr>
+                <td>${gameObject.id}</td>
+                <td>${gameObject.title}</td>
+                <td>${gameObject.text}</td>
+                <td>${gameObject.status}</td>
+                <td>${gameObject.createdAt}</td>
+                <td>${gameObject.updatedAt}</td>
+                <td>
+                    <a href="/editGameObject/${gameObject.id}">Update</a>
+                    |
+                    <a href="/deleteGameObject/${gameObject.id}">Delete</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+
+<br>
+<a href="/addGameObject/${post.id}">Add game objects</a>
 </body>
 </html>

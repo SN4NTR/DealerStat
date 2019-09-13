@@ -46,13 +46,6 @@ public class PostController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/editPost", method = RequestMethod.GET)
-    public ModelAndView editPost() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("post/edit");
-        return modelAndView;
-    }
-
     @RequestMapping(value = "/editPost/{id}", method = RequestMethod.GET)
     public ModelAndView editPost(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -66,6 +59,7 @@ public class PostController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/posts");
         post.setUser(postService.getById(post.getId()).getUser());
+        post.setGameObjects(postService.getById(post.getId()).getGameObjects());
         postService.updatePost(post);
         return modelAndView;
     }

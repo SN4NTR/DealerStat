@@ -45,7 +45,7 @@
         </tr>
         <c:forEach var="post" items="${user.posts}">
             <tr>
-                <td>${post.id}</td>
+                <td><a href="/post/${post.id}">${post.id}</a></td>
                 <td>${post.title}</td>
                 <td>${post.createdAt}</td>
                 <td>
