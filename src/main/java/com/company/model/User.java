@@ -53,7 +53,8 @@ public class User {
 
     @Getter
     @Setter
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.REMOVE,
+            mappedBy = "user")
     private Set<Post> posts;
 }

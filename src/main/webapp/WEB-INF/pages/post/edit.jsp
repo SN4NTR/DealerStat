@@ -15,7 +15,7 @@
     <input type="hidden" name="id" value="${post.id}">
     <label for="title">Title</label>
     <input type="text" name="title" id="title">
-    <input type="date" name="createdAt" value="${post.createdAt}" readonly>
+    <input type="date" name="createdAt" value="${post.createdAt}" hidden>
     <br>
     <input type="submit" value="Submit">
 </form>
