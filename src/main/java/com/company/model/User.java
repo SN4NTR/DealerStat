@@ -57,4 +57,11 @@ public class User {
             cascade = CascadeType.REMOVE,
             mappedBy = "user")
     private Set<Post> posts;
+
+    @Getter
+    @Setter
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.REMOVE,
+            mappedBy = "user")
+    private Set<Comment> comments;
 }

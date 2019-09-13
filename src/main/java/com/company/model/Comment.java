@@ -19,12 +19,12 @@ public class Comment {
     private String message;
 
     @Column(name = "created_at")
-    private Date created_at;
+    private Date createdAt;
 
     @Column(name = "approved")
     private boolean approved;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private User user_id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

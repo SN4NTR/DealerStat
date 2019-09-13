@@ -87,6 +87,7 @@ public class PostController {
         Set<Post> posts = new HashSet<>();
         posts.add(post);
         user.setPosts(posts);
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/posts");
         return modelAndView;

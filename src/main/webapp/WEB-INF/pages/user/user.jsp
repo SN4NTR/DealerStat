@@ -33,24 +33,57 @@
     </tr>
 </table>
 
-<h1>Posts</h1>
+<c:if test="${!empty user.posts}">
+    <h1>Posts</h1>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Created At</th>
-    </tr>
-    <c:forEach var="post" items="${user.posts}">
+    <table>
         <tr>
-            <td>${post.id}</td>
-            <td>${post.title}</td>
-            <td>${post.createdAt}</td>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Created At</th>
+            <th>Action</th>
         </tr>
-    </c:forEach>
-</table>
+        <c:forEach var="post" items="${user.posts}">
+            <tr>
+                <td>${post.id}</td>
+                <td>${post.title}</td>
+                <td>${post.createdAt}</td>
+                <td>
+                    <a href="/editPost/${post.id}">Update</a>
+                    |
+                    <a href="/deletePost/${post.id}">Delete</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
 
+<br>
 <a href="/addPost/${user.id}">Add post</a>
+
+<c:if test="${!empty user.comments}">
+    <h1>Comments</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Message</th>
+            <th>Created At</th>
+            <th>Action</th>
+        </tr>
+        <c:forEach var="comment" items="${user.comments}">
+            <tr>
+                <td>${comment.id}</td>
+                <td>${comment.message}</td>
+                <td>${comment.createdAt}</td>
+                <td><a href="/deleteComment/${comment.id}">Delete</a></td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+
+<br>
+<a href="/addComment/${user.id}">Add comment</a>
 
 </body>
 </html>
