@@ -33,7 +33,9 @@
             <td>${user.lastName}</td>
             <td>${user.email}</td>
             <td>${user.createdAt}</td>
-            <td>${user.roles}</td>
+            <c:forEach var="role" items="${user.roles}">
+                <td>${role.name}</td>
+            </c:forEach>
             <td>
                 <a href="/editUser/${user.id}">Edit</a>
                 |

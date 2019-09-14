@@ -42,6 +42,7 @@
             <th>Status</th>
             <th>Created at</th>
             <th>Updated at</th>
+            <th>Game</th>
             <th>Action</th>
         </tr>
         <c:forEach var="gameObject" items="${post.gameObjects}">
@@ -52,8 +53,9 @@
                 <td>${gameObject.status}</td>
                 <td>${gameObject.createdAt}</td>
                 <td>${gameObject.updatedAt}</td>
+                <td>${gameObject.game.name}</td>
                 <td>
-                    <a href="/editGameObject/${gameObject.id}">Update</a>
+                    <a href="/editGameObject/${gameObject.id}">Edit</a>
                     |
                     <a href="/deleteGameObject/${gameObject.id}">Delete</a>
                 </td>
@@ -63,6 +65,6 @@
 </c:if>
 
 <br>
-<a href="/addGameObject/${post.id}">Add game objects</a>
+<a href="/addGameObject/${post.id}">Add game object</a>
 </body>
 </html>

@@ -50,4 +50,10 @@ public class GameObject {
             joinColumns = {@JoinColumn(name = "gameObject_id")},
             inverseJoinColumns = {@JoinColumn(name = "post_id")})
     private Set<Post> posts;
+
+    @Getter
+    @Setter
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "game_id")
+    private Game game;
 }

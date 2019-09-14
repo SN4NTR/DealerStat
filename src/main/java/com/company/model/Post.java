@@ -42,12 +42,4 @@ public class Post {
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "gameObject_id")})
     private Set<GameObject> gameObjects;
-
-//    @Getter
-//    @Setter
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "game_post",
-//            joinColumns = {@JoinColumn(name = "post_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "game_id")})
-//    private Set<Game> games;
 }

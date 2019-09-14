@@ -35,6 +35,7 @@ public class GameObjectServiceImpl implements GameObjectService {
     @Override
     public void updateGameObject(GameObject gameObject) {
         gameObject.setUpdatedAt(new Date(new java.util.Date().getTime()));
+        gameObject.setStatus(true);
         gameObjectDao.updateGameObject(gameObject);
     }
 

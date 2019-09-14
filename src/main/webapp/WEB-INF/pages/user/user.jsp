@@ -49,7 +49,7 @@
                 <td>${post.title}</td>
                 <td>${post.createdAt}</td>
                 <td>
-                    <a href="/editPost/${post.id}">Update</a>
+                    <a href="/editPost/${post.id}">Edit</a>
                     |
                     <a href="/deletePost/${post.id}">Delete</a>
                 </td>

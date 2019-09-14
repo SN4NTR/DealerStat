@@ -4,6 +4,7 @@ package com.company.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -17,4 +18,7 @@ public class Game {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "game")
+    private Set<GameObject> gameObjects;
 }

@@ -28,11 +28,15 @@ public class GameObjectController {
         this.postService = postService;
     }
 
+    public GameObjectController() {
+    }
+
     @RequestMapping(value = "/addGameObject/{id}", method = RequestMethod.GET)
     public ModelAndView addGameObject(@PathVariable("id") int id) {
         postIdBuffer = id;
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("post/gameObject/create");
+        modelAndView.addObject("gameObject", new GameObject());
         return modelAndView;
     }
 
@@ -48,7 +52,9 @@ public class GameObjectController {
         post.setGameObjects(gameObjects);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/posts");
+        GameController.setGameObjectIdBuffer(gameObject.getId());
+        modelAndView.addObject("gameObject", gameObject);
+        modelAndView.setViewName("post/game/add");
         return modelAndView;
     }
 
@@ -70,6 +76,7 @@ public class GameObjectController {
 
     @RequestMapping(value = "/editGameObject", method = RequestMethod.POST)
     public ModelAndView editGameObject(@ModelAttribute("gameObject") GameObject gameObject) {
+        gameObject.setGame(gameObjectService.getById(gameObject.getId()).getGame());
         gameObject.setPosts(gameObjectService.getById(gameObject.getId()).getPosts());
         gameObjectService.updateGameObject(gameObject);
         ModelAndView modelAndView = new ModelAndView();

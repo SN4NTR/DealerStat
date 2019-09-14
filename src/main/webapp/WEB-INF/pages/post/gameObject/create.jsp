@@ -18,7 +18,7 @@
     <label for="text">Text</label>
     <input type="text" name="text" id="text">
     <br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Choose game tag">
 </form>
 </body>
 </html>
