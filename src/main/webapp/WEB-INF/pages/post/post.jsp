@@ -53,7 +53,9 @@
                 <td>${gameObject.status}</td>
                 <td>${gameObject.createdAt}</td>
                 <td>${gameObject.updatedAt}</td>
-                <td>${gameObject.game.name}</td>
+                <td>
+                    <a href="/showGameObjectsByGameId/${gameObject.game.id}">${gameObject.game.name}</a>
+                </td>
                 <td>
                     <a href="/editGameObject/${gameObject.id}">Edit</a>
                     |

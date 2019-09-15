@@ -1,6 +1,7 @@
 package com.company.dao;
 
 import com.company.model.Game;
+import com.company.model.GameObject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,12 @@ public class GameDaoImpl implements GameDao {
     public List<Game> getAllGames() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Game").list();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<GameObject> getGameObjectsByGameId(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from GameObject where game.id =" + id).list();
     }
 }
