@@ -1,6 +1,5 @@
 package com.company.controller;
 
-import com.company.model.Post;
 import com.company.model.User;
 import com.company.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +68,7 @@ public class UserController {
     @RequestMapping(value = "/addUser", method = RequestMethod.GET)
     public ModelAndView addUser() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("user/signUp");
+        modelAndView.setViewName("signUp");
         return modelAndView;
     }
 

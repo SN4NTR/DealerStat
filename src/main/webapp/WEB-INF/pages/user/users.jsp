@@ -48,5 +48,7 @@
 <a href="/addUser">Add dealer</a>
 <br>
 <a href="/posts">Show posts</a>
+
+<h2><a href="/logout">Logout</a></h2>
 </body>
 </html>

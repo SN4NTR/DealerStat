@@ -1,5 +1,6 @@
 package com.company.dao;
 
+import com.company.model.Role;
 import com.company.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -48,5 +49,18 @@ public class UserDaoImpl implements UserDao {
     public User getById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(User.class, id);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(User.class, email);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Role> getRoles() {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from User").list();
     }
 }
