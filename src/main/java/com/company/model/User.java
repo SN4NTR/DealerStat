@@ -35,6 +35,11 @@ public class User {
 
     @Getter
     @Setter
+    @Transient
+    private String confirmPassword;
+
+    @Getter
+    @Setter
     @Column(name = "email")
     private String email;
 

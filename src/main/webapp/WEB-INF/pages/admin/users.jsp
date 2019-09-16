@@ -22,6 +22,7 @@
         <th>E-mail</th>
         <th>Created At</th>
         <th>Role</th>
+        <th>Action</th>
     </tr>
     <c:forEach var="user" items="${userList}">
         <tr>
@@ -35,6 +36,11 @@
             <c:forEach var="role" items="${user.roles}">
                 <td>${role.name}</td>
             </c:forEach>
+            <td>
+                <a href="/editUser/${user.id}">Edit</a>
+                |
+                <a href="/deleteUser/${user.id}">Delete</a>
+            </td>
         </tr>
     </c:forEach>
 </table>

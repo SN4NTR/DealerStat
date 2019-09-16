@@ -19,15 +19,13 @@
     <div style="color:red; font-weight: bold; margin: 30px 0px;">${errorMessage}</div>
 </c:if>
 
-<form name='login' action="/login" method='POST'>
+<form name='login' action="/login" method='post'>
     <table>
         <tr>
-            <td>UserName:</td>
-            <td><input type='text' name='username' value=''></td>
+            <td><input type='text' name='username' placeholder="Email"></td>
         </tr>
         <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password'/></td>
+            <td><input type='password' name='password' placeholder="Password"/></td>
         </tr>
         <tr>
             <td><input name="submit" type="submit" value="submit"/></td>
@@ -35,5 +33,7 @@
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
+
+<h4><a href="/signUp">Sign Up</a></h4>
 </body>
 </html>
