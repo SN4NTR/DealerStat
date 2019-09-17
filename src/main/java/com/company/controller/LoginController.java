@@ -75,7 +75,7 @@ public class LoginController {
 
         userService.addUser(user);
 
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/sendEmail/" + user.getEmail());
         return modelAndView;
     }
 
