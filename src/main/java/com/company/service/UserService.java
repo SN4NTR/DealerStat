@@ -17,7 +17,5 @@ public interface UserService {
 
     User getById(int id);
 
-    User getByEmail(String email);
-
     List<Role> getRoles();
 }

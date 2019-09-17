@@ -1,6 +1,7 @@
 package com.company.controller;
 
 import com.company.model.Comment;
+import com.company.model.Post;
 import com.company.model.User;
 import com.company.service.CommentService;
 import com.company.service.UserService;
@@ -46,15 +47,18 @@ public class CommentController {
         comments.add(comment);
         user.setComments(comments);
 
+        int userId = user.getId();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/user/" + userId);
         return modelAndView;
     }
 
     @RequestMapping(value = "/deleteComment/{id}", method = RequestMethod.GET)
     public ModelAndView deleteComment(@PathVariable("id") int id) {
+        int userId = commentService.getById(id).getUser().getId();
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/profile/" + userId);
         commentService.deleteComment(commentService.getById(id));
         return modelAndView;
     }

@@ -8,7 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 @Component
 public class UserValidator implements Validator {
@@ -25,10 +25,13 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         User user = (User) o;
 
-//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Required");
-//        if (userService.getByEmail(user.getEmail()) != null) {
-//            errors.rejectValue("email", "Duplicate.user.email");
-//        }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Required");
+        List<User> users = userService.getAllUsers();
+        for (User u : users) {
+            if (u.getEmail().equals(user.getEmail())) {
+                errors.rejectValue("email", "Duplicate.user.email");
+            }
+        }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
         if (!user.getConfirmPassword().equals(user.getPassword())) {

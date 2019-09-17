@@ -13,14 +13,21 @@
     <link href="<c:url value="/res/style.css"/> " rel="stylesheet" type="text/css">
 </head>
 <body>
+<div>
+    <h2>
+        <a href="/profile">Go to Profile</a> |
+        <a href="/logout">Logout</a>
+    </h2>
+</div>
+
 <h1>Posts</h1>
+
 <table>
     <tr>
         <th>ID</th>
         <th>Title</th>
         <th>Created At</th>
         <th>Dealer ID</th>
-        <th>Action</th>
     </tr>
     <c:forEach var="post" items="${postList}">
         <tr>
@@ -30,11 +37,6 @@
             <td>${post.title}</td>
             <td>${post.createdAt}</td>
             <td><a href="/user/${post.user.id}">${post.user.id}</a></td>
-            <td>
-                <a href="/editPost/${post.id}">Edit</a>
-                |
-                <a href="/deletePost/${post.id}">Delete</a>
-            </td>
         </tr>
     </c:forEach>
 </table>

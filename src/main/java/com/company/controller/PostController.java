@@ -56,11 +56,12 @@ public class PostController {
 
     @RequestMapping(value = "/editPost", method = RequestMethod.POST)
     public ModelAndView editPost(@ModelAttribute("post") Post post) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/posts");
         post.setUser(postService.getById(post.getId()).getUser());
         post.setGameObjects(postService.getById(post.getId()).getGameObjects());
         postService.updatePost(post);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/profile/" + post.getUser().getId());
         return modelAndView;
     }
 
@@ -83,15 +84,16 @@ public class PostController {
         user.setPosts(posts);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/posts");
+        modelAndView.setViewName("redirect:/profile/post/" + post.getId());
         return modelAndView;
     }
 
     @RequestMapping(value = "/deletePost/{id}", method = RequestMethod.GET)
     public ModelAndView deletePost(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
+        int userId = postService.getById(id).getUser().getId();
         postService.deletePost(postService.getById(id));
-        modelAndView.setViewName("redirect:/posts");
+        modelAndView.setViewName("redirect:/profile/" + userId);
         return modelAndView;
     }
 }

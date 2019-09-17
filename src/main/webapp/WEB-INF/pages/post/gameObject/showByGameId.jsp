@@ -13,6 +13,12 @@
     <link href="<c:url value="/res/style.css"/> " rel="stylesheet" type="text/css">
 </head>
 <body>
+<div>
+    <h2>
+        <a href="/profile">Go to Profile</a> |
+        <a href="/logout">Logout</a>
+    </h2>
+</div>
 
 <h1>Game Objects By Game Filter</h1>
 

@@ -49,17 +49,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.updateUser(user);
     }
 
     @Override
     public User getById(int id) {
         return userDao.getById(id);
-    }
-
-    @Override
-    public User getByEmail(String email) {
-        return userDao.getByEmail(email);
     }
 
     @Override

@@ -49,6 +49,7 @@
             <th>Created at</th>
             <th>Updated at</th>
             <th>Game</th>
+            <th>Action</th>
         </tr>
         <c:forEach var="gameObject" items="${post.gameObjects}">
             <tr>
@@ -61,9 +62,17 @@
                 <td>
                     <a href="/showGameObjectsByGameId/${gameObject.game.id}">${gameObject.game.name}</a>
                 </td>
+                <td>
+                    <a href="/editGameObject/${gameObject.id}">Edit</a>
+                    |
+                    <a href="/deleteGameObject/${gameObject.id}">Delete</a>
+                </td>
             </tr>
         </c:forEach>
     </table>
 </c:if>
+
+<br>
+<a href="/addGameObject/${post.id}">Add game object</a>
 </body>
 </html>

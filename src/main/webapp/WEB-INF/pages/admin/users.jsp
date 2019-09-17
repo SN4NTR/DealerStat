@@ -13,7 +13,15 @@
     <link href="<c:url value="/res/style.css"/> " rel="stylesheet" type="text/css">
 </head>
 <body>
+<div>
+    <h2>
+        <a href="/profile">Go to Profile</a> |
+        <a href="/logout">Logout</a>
+    </h2>
+</div>
+
 <h1>Dealers List</h1>
+
 <table>
     <tr>
         <th>ID</th>
@@ -27,7 +35,7 @@
     <c:forEach var="user" items="${userList}">
         <tr>
             <td>
-                <a href="/user/${user.id}">${user.id}</a>
+                <a href="/profile/${user.id}">${user.id}</a>
             </td>
             <td>${user.firstName}</td>
             <td>${user.lastName}</td>
@@ -37,18 +45,10 @@
                 <td>${role.name}</td>
             </c:forEach>
             <td>
-                <a href="/editUser/${user.id}">Edit</a>
-                |
                 <a href="/deleteUser/${user.id}">Delete</a>
             </td>
         </tr>
     </c:forEach>
 </table>
-
-<a href="/addUser">Add dealer</a>
-<br>
-<a href="/posts">Show posts</a>
-
-<h2><a href="/logout">Logout</a></h2>
 </body>
 </html>

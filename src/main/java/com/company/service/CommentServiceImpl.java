@@ -27,6 +27,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void addComment(Comment comment) {
         comment.setCreatedAt(new Date(new java.util.Date().getTime()));
+        comment.setApproved(false);
         commentDao.addComment(comment);
     }
 

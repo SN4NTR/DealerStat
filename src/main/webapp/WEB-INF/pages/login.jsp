@@ -28,9 +28,16 @@
             <td><input type='password' name='password' placeholder="Password"/></td>
         </tr>
         <tr>
-            <td><input name="submit" type="submit" value="submit"/></td>
+            <td><input name="submit" type="submit" value="Login"/></td>
         </tr>
     </table>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
+
+<form action="/login" method="post">
+    <input type="text" name="username" value="guest" hidden>
+    <input type="text" name="password" value="guest" hidden>
+    <input type="submit" value="Enter as a guest">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
 

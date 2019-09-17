@@ -52,12 +52,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getByEmail(String email) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(User.class, email);
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public List<Role> getRoles() {
         Session session = sessionFactory.getCurrentSession();

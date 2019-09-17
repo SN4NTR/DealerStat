@@ -2,6 +2,7 @@ package com.company.controller;
 
 import com.company.model.Game;
 import com.company.model.GameObject;
+import com.company.model.Post;
 import com.company.service.GameObjectService;
 import com.company.service.GameService;
 import lombok.Getter;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Set;
 
 @Controller
 public class GameController {
@@ -37,8 +40,21 @@ public class GameController {
         gameObject.setGame(gameService.getById(game.getId()));
         gameObjectService.updateGameObject(gameObject);
 
+        int postId = 0;
+        Set<Post> posts = gameObject.getPosts();
+        for (Post p : posts) {
+            Set<GameObject> gameObjects = p.getGameObjects();
+
+            for (GameObject go : gameObjects) {
+                if (go.getId() == gameObjectIdBuffer) {
+                    postId = p.getId();
+                    break;
+                }
+            }
+        }
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/posts");
+        modelAndView.setViewName("redirect:/profile/post/" + postId);
         return modelAndView;
     }
 
