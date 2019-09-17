@@ -15,7 +15,8 @@
 <body>
 <div>
     <h2>
-        <a href="/profile">Go to Profile</a> |
+        <a href="/profile">Profile</a> |
+        <a href="/">Home</a> |
         <a href="/logout">Logout</a>
     </h2>
 </div>

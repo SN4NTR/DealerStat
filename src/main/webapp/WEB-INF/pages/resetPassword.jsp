@@ -1,20 +1,18 @@
 <%--
   Created by IntelliJ IDEA.
   User: SN4NTR
-  Date: 13.09.2019
-  Time: 17:52
+  Date: 17.09.2019
+  Time: 19:39
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Create comment</title>
+    <title>Reset Password</title>
 </head>
 <body>
-<form action="/comment/add" method="post">
-    <label for="message">Message</label>
-    <input type="text" name="message" id="message">
-    <br>
+<form action="/resetPasswordForm" method="get">
+    <input type="text" name="email" placeholder="User email">
     <input type="submit" value="Submit">
 </form>
 </body>

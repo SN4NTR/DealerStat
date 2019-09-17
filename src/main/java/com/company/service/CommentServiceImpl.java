@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -34,5 +35,15 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Comment comment) {
         commentDao.deleteComment(comment);
+    }
+
+    @Override
+    public List<Comment> getAllComments() {
+        return commentDao.getAllComments();
+    }
+
+    @Override
+    public void updateComment(Comment comment) {
+        commentDao.updateComment(comment);
     }
 }

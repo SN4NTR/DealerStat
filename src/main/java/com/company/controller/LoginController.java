@@ -9,14 +9,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -79,5 +77,48 @@ public class LoginController {
 
         modelAndView.setViewName("redirect:/");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
+    public ModelAndView resetPassword() {
+        User user = new User();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("resetPassword");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/resetPasswordForm", method = RequestMethod.GET)
+    public ModelAndView resetPassword(@ModelAttribute("user") User user) {
+        ModelAndView modelAndView = new ModelAndView();
+        User tempUser = userService.getById(findUserIdByEmail(user.getEmail()));
+        modelAndView.setViewName("newPassword");
+        modelAndView.addObject("user", tempUser);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/setNewPassword", method = RequestMethod.POST)
+    public ModelAndView setNewPassword(@ModelAttribute("user") User user) {
+        User tempUser = userService.getById(findUserIdByEmail(user.getEmail()));
+        tempUser.setPassword(user.getPassword());
+        tempUser.setConfirmPassword(user.getConfirmPassword());
+        userService.updateUser(tempUser);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
+    private int findUserIdByEmail(String email) {
+        int userId = 0;
+
+        List<User> userList = userService.getAllUsers();
+        for (User user : userList) {
+            if (email.equals(user.getEmail())) {
+                userId = user.getId();
+            }
+        }
+
+        return userId;
     }
 }

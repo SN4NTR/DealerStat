@@ -15,7 +15,8 @@
 <body>
 <div>
     <h2>
-        <a href="/profile">Go to Profile</a> |
+        <a href="/profile">Profile</a> |
+        <a href="/">Home</a> |
         <a href="/logout">Logout</a>
     </h2>
 </div>
@@ -59,12 +60,12 @@
 </c:if>
 
 <c:if test="${empty user.comments}">
-    <h2><a href="/addComment/${user.id}">Add comment</a></h2>
+    <h2><a href="/comment/add/${user.id}">Add comment</a></h2>
 </c:if>
 
 <c:if test="${!empty user.comments}">
     <h1>Comments</h1>
-    <h2><a href="/addComment/${user.id}">Add comment</a></h2>
+    <h2><a href="/comment/add/${user.id}">Add comment</a></h2>
 
     <table>
         <tr>
@@ -73,11 +74,15 @@
             <th>Created At</th>
         </tr>
         <c:forEach var="comment" items="${user.comments}">
-            <tr>
-                <td>${comment.id}</td>
-                <td>${comment.message}</td>
-                <td>${comment.createdAt}</td>
-            </tr>
+            <c:choose>
+                <c:when test="${comment.approved == true}">
+                    <tr>
+                        <td>${comment.id}</td>
+                        <td>${comment.message}</td>
+                        <td>${comment.createdAt}</td>
+                    </tr>
+                </c:when>
+            </c:choose>
         </c:forEach>
     </table>
 </c:if>

@@ -15,12 +15,13 @@
 <body>
 <div>
     <h2>
-        <a href="/profile">Go to Profile</a> |
+        <a href="/profile">Profile</a> |
+        <a href="/">Home</a> |
         <a href="/logout">Logout</a>
     </h2>
 </div>
 
-<h1>Dealers List</h1>
+<h1>Users List</h1>
 
 <table>
     <tr>
@@ -50,5 +51,7 @@
         </tr>
     </c:forEach>
 </table>
+
+<h2><a href="/comments">Show Comments</a></h2>
 </body>
 </html>

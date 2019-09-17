@@ -1,7 +1,6 @@
 package com.company.controller;
 
 import com.company.model.Comment;
-import com.company.model.Post;
 import com.company.model.User;
 import com.company.service.CommentService;
 import com.company.service.UserService;
@@ -13,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -29,7 +30,7 @@ public class CommentController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/addComment/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/comment/add/{id}", method = RequestMethod.GET)
     public ModelAndView addComment(@PathVariable("id") int id) {
         userIdBuffer = id;
         ModelAndView modelAndView = new ModelAndView();
@@ -38,7 +39,7 @@ public class CommentController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/addComment", method = RequestMethod.POST)
+    @RequestMapping(value = "/comment/add", method = RequestMethod.POST)
     public ModelAndView addComment(@ModelAttribute("comment") Comment comment) {
         User user = userService.getById(userIdBuffer);
         comment.setUser(user);
@@ -53,13 +54,50 @@ public class CommentController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/deleteComment/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/comment/delete/{id}", method = RequestMethod.GET)
     public ModelAndView deleteComment(@PathVariable("id") int id) {
         int userId = commentService.getById(id).getUser().getId();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/profile/" + userId);
         commentService.deleteComment(commentService.getById(id));
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/comments", method = RequestMethod.GET)
+    public ModelAndView getAllComments() {
+        List<Comment> allComments = commentService.getAllComments();
+        List<Comment> notApprovedComments = new ArrayList<>();
+
+        for (Comment c : allComments) {
+            if (!c.isApproved()) {
+                notApprovedComments.add(c);
+            }
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/comments");
+        modelAndView.addObject("comments", notApprovedComments);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/comment/approve/{id}", method = RequestMethod.GET)
+    public ModelAndView approveComment(@PathVariable("id") int id) {
+        Comment comment = commentService.getById(id);
+        comment.setApproved(true);
+        commentService.updateComment(comment);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/comments");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/comment/decline/{id}", method = RequestMethod.GET)
+    public ModelAndView declineComment(@PathVariable("id") int id) {
+        commentService.deleteComment(commentService.getById(id));
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/comments");
         return modelAndView;
     }
 }

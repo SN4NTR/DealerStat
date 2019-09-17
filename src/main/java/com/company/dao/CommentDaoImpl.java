@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class CommentDaoImpl implements CommentDao {
 
@@ -33,5 +35,18 @@ public class CommentDaoImpl implements CommentDao {
         Session session = sessionFactory.getCurrentSession();
         session.delete(comment);
         session.flush();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Comment> getAllComments() {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Comment").list();
+    }
+
+    @Override
+    public void updateComment(Comment comment) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(comment);
     }
 }
