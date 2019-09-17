@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class EmailController {
@@ -15,16 +16,15 @@ public class EmailController {
     public JavaMailSender emailSender;
 
     @RequestMapping(value = "/sendEmail/{email}", method = RequestMethod.GET)
-    public String sendSimpleEmail(@PathVariable("email") String email) {
-
+    public ModelAndView sendSimpleEmail(@PathVariable("email") String email) {
         SimpleMailMessage message = new SimpleMailMessage();
-
         message.setTo(email);
         message.setSubject("DealerStat | Registration");
         message.setText("You have been registered in our platform!");
-
         emailSender.send(message);
 
-        return "redirect:/";
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
     }
 }
