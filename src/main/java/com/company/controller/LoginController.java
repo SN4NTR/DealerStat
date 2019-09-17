@@ -91,8 +91,19 @@ public class LoginController {
     @RequestMapping(value = "/resetPasswordForm", method = RequestMethod.GET)
     public ModelAndView resetPassword(@ModelAttribute("user") User user) {
         ModelAndView modelAndView = new ModelAndView();
-        User tempUser = userService.getById(findUserIdByEmail(user.getEmail()));
-        modelAndView.setViewName("newPassword");
+        User tempUser = new User();
+
+        List<User> userList = userService.getAllUsers();
+        for (User u : userList) {
+            modelAndView.setViewName("redirect:/resetPassword");
+
+            if (u.getEmail().equals(user.getEmail())) {
+                modelAndView.setViewName("newPassword");
+                tempUser = userService.getById(findUserIdByEmail(user.getEmail()));
+                break;
+            }
+        }
+
         modelAndView.addObject("user", tempUser);
         return modelAndView;
     }

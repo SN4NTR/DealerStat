@@ -12,7 +12,7 @@
 </head>
 <body>
 <form action="/resetPasswordForm" method="get">
-    <input type="text" name="email" placeholder="User email">
+    <input type="email" name="email" placeholder="User email">
     <input type="submit" value="Submit">
 </form>
 </body>
