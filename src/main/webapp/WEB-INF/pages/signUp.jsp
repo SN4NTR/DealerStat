@@ -17,14 +17,16 @@
 <form:form method="post" modelAttribute="user">
     <h2>Creating account</h2>
     <spring:bind path="firstName">
-        <div>
+        <div class="form-group ${status.error ? 'has-error' : ''}">
             <form:input path="firstName" type="text" placeholder="First Name"/>
+            <form:errors path="firstName"/>
         </div>
     </spring:bind>
 
     <spring:bind path="lastName">
-        <div>
+        <div class="form-group ${status.error ? 'has-error' : ''}">
             <form:input path="lastName" type="text" placeholder="Last Name"/>
+            <form:errors path="lastName"/>
         </div>
     </spring:bind>
 

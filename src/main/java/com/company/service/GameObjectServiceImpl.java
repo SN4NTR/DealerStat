@@ -4,12 +4,10 @@ import com.company.dao.GameObjectDao;
 import com.company.model.GameObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 
 @Service
-@Transactional
 public class GameObjectServiceImpl implements GameObjectService {
 
     private GameObjectDao gameObjectDao;

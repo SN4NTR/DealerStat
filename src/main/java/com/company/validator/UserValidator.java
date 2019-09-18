@@ -13,8 +13,12 @@ import java.util.List;
 @Component
 public class UserValidator implements Validator {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserValidator(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -25,6 +29,8 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         User user = (User) o;
 
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Required");
         List<User> users = userService.getAllUsers();
         for (User u : users) {
@@ -34,6 +40,7 @@ public class UserValidator implements Validator {
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "Required");
         if (!user.getConfirmPassword().equals(user.getPassword())) {
             errors.rejectValue("confirmPassword", "Different.user.password");
         }
