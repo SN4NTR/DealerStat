@@ -71,7 +71,7 @@ public class UserController {
     @RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.GET)
     public ModelAndView deleteUser(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/login?logout=true");
         userService.deleteUser(userService.getById(id));
         return modelAndView;
     }
