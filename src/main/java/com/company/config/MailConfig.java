@@ -14,19 +14,27 @@ import java.util.Properties;
 @PropertySource(value = "classpath:mail.properties")
 public class MailConfig {
 
+    private final Environment env;
+
+    @Autowired
+    public MailConfig(Environment env) {
+        this.env = env;
+    }
+
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
-        mailSender.setUsername("dealer.stat.test@gmail.com");
-        mailSender.setPassword("12345678Abcd");
+        mailSender.setHost(env.getRequiredProperty("Host"));
+        mailSender.setPort(Integer.parseInt(env.getRequiredProperty("Port")));
+        mailSender.setUsername(env.getRequiredProperty("email.login"));
+        mailSender.setPassword(env.getRequiredProperty("email.password"));
 
         Properties properties = mailSender.getJavaMailProperties();
-        properties.put("mail.transport.protocol", "smtp");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.debug", "true");
+        properties.put("mail.transport.protocol", env.getRequiredProperty("mail.transport.protocol"));
+        properties.put("mail.smtp.auth", env.getRequiredProperty("mail.smtp.auth"));
+        properties.put("mail.smtp.starttls.enable", env.getRequiredProperty("mail.smtp.starttls.enable"));
+        properties.put("mail.debug", env.getRequiredProperty("mail.debug"));
+        mailSender.setJavaMailProperties(properties);
 
         return mailSender;
     }
