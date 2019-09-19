@@ -18,4 +18,6 @@ public interface UserService {
     User getById(int id);
 
     List<Role> getRoles();
+
+    void activateUser(String code);
 }

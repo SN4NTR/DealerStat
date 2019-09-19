@@ -45,6 +45,11 @@ public class User {
 
     @Getter
     @Setter
+    @Column(name = "activation_code")
+    private String activationCode;
+
+    @Getter
+    @Setter
     @Column(name = "created_at")
     private Date createdAt;
 

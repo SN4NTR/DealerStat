@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login", "/signUp",
                         "/resetPassword", "/resetPasswordForm",
-                        "/setNewPassword", "/sendEmail/**")
+                        "/setNewPassword", "/activate/*")
                 .permitAll()
                 .antMatchers("/admin", "/comment**")
                 .hasRole("ADMIN")

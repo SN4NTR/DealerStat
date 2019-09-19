@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private MailService mailService;
+
     @Override
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
@@ -37,6 +41,15 @@ public class UserServiceImpl implements UserService {
         roles.add(roleDao.getRoleById(2));
         user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        user.setActivationCode(UUID.randomUUID().toString());
+        String message = String.format(
+                "%s, welcome to our platform!\n" +
+                        "To activate your profile, visit next link: http://localhost:8080/activate/%s",
+                user.getFirstName(), user.getActivationCode()
+        );
+        mailService.sendMessage(user.getEmail(), "Activation code", message);
+
         userDao.addUser(user);
     }
 
@@ -59,5 +72,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Role> getRoles() {
         return userDao.getRoles();
+    }
+
+    @Override
+    public void activateUser(String code) {
+        User user = userDao.getById(findUserIdByCode(code));
+
+        user.setActivationCode(null);
+        userDao.updateUser(user);
+    }
+
+    private int findUserIdByCode(String code) {
+        int userId = 0;
+
+        List<User> userList = userDao.getAllUsers();
+        for (User user : userList) {
+            if (code.equals(user.getEmail())) {
+                userId = user.getId();
+            }
+        }
+
+        return userId;
     }
 }

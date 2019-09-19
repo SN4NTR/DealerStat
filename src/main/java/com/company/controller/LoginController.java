@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class LoginController {
@@ -75,8 +76,15 @@ public class LoginController {
 
         userService.addUser(user);
 
-        modelAndView.setViewName("redirect:/sendEmail/" + user.getEmail());
+        modelAndView.setViewName("redirect:/login");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/activate/{code}", method = RequestMethod.GET)
+    public String activate(@PathVariable("code") String code) {
+        userService.activateUser(code);
+
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
