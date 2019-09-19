@@ -15,32 +15,41 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final UserValidator userValidator;
 
     @Autowired
-    private UserValidator userValidator;
+    public LoginController(UserService userService, UserValidator userValidator) {
+        this.userService = userService;
+        this.userValidator = userValidator;
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-                            @RequestParam(value = "logout", required = false) String logout) {
+                              @RequestParam(value = "logout", required = false) String logout,
+                              @RequestParam(value = "activationCode", required = false) String code) {
         ModelAndView modelAndView = new ModelAndView();
-        String errorMessage = null;
+        String message = null;
 
-        if(error != null) {
-            errorMessage = "Username or Password is incorrect";
+        if (error != null) {
+            message = "Username or Password is incorrect";
         }
-        if(logout != null) {
-            errorMessage = "Logged out successfully";
+        if (logout != null) {
+            message = "Logged out successfully";
+        }
+        if ("true".equals(code)) {
+            message = "Submit your email";
+        }
+        if ("false".equals(code)) {
+            message = "Email is submitted";
         }
 
         modelAndView.setViewName("login");
-        modelAndView.addObject("errorMessage", errorMessage);
+        modelAndView.addObject("message", message);
         return modelAndView;
     }
 
@@ -76,15 +85,17 @@ public class LoginController {
 
         userService.addUser(user);
 
-        modelAndView.setViewName("redirect:/login");
+        modelAndView.setViewName("redirect:/login?activationCode=true");
         return modelAndView;
     }
 
     @RequestMapping(value = "/activate/{code}", method = RequestMethod.GET)
-    public String activate(@PathVariable("code") String code) {
+    public ModelAndView activate(@PathVariable("code") String code) {
         userService.activateUser(code);
 
-        return "redirect:/login";
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/login?activationCode=false");
+        return modelAndView;
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)

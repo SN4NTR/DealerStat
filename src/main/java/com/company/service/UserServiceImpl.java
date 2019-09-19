@@ -17,17 +17,18 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
+    private final RoleDao roleDao;
+    private final PasswordEncoder passwordEncoder;
+    private final MailService mailService;
 
     @Autowired
-    private RoleDao roleDao;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private MailService mailService;
+    public UserServiceImpl(UserDao userDao, RoleDao roleDao, PasswordEncoder passwordEncoder, MailService mailService) {
+        this.userDao = userDao;
+        this.roleDao = roleDao;
+        this.passwordEncoder = passwordEncoder;
+        this.mailService = mailService;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -77,7 +78,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void activateUser(String code) {
         User user = userDao.getById(findUserIdByCode(code));
-
         user.setActivationCode(null);
         userDao.updateUser(user);
     }
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
         List<User> userList = userDao.getAllUsers();
         for (User user : userList) {
-            if (code.equals(user.getEmail())) {
+            if (code.equals(user.getActivationCode())) {
                 userId = user.getId();
             }
         }

@@ -15,8 +15,8 @@
 <body>
 <h1>Login Form</h1>
 
-<c:if test="${not empty errorMessage}">
-    <div style="color:red; font-weight: bold; margin: 30px 0px;">${errorMessage}</div>
+<c:if test="${not empty message}">
+    <div>${message}</div>
 </c:if>
 
 <form name='login' action="/login" method='post'>
