@@ -28,7 +28,7 @@ public class PostDaoImpl implements PostDao {
     }
 
     @Override
-    public void addPost(Post post) {
+    public void savePost(Post post) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(post);
     }

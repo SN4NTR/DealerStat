@@ -12,7 +12,7 @@
     <title>Create post</title>
 </head>
 <body>
-<form action="/addPost" method="post">
+<form action="/post/add" method="post">
     <label for="title">Title</label>
     <input type="text" name="title" id="title">
     <br>

@@ -8,7 +8,7 @@ public interface PostService {
 
     List<Post> getAllPosts();
 
-    void addPost(Post post);
+    void savePost(Post post);
 
     void deletePost(Post post);
 

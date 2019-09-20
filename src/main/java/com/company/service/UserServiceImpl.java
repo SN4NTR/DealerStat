@@ -7,6 +7,8 @@ import com.company.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) {
         user.setCreatedAt(new Date(new java.util.Date().getTime()));
         Set<Role> roles = new HashSet<>();
-        roles.add(roleDao.getRoleById(2));
+        roles.add(roleDao.getById(2));
         user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -123,17 +125,34 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
     public int findUserIdByCode(String code) {
-        int userId = 0;
+        int id = 0;
 
         List<User> userList = userDao.getAllUsers();
         for (User user : userList) {
             if (code.equals(user.getActivationCode())) {
-                userId = user.getId();
+                id = user.getId();
                 break;
             }
         }
 
-        return userId;
+        return id;
+    }
+
+    @Override
+    public int findCurrentUserIdByEmail() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        int id = 0;
+
+        List<User> userList = userDao.getAllUsers();
+        for (User u : userList) {
+            if (auth.getName().equals(u.getEmail())) {
+                id = u.getId();
+                break;
+            }
+        }
+
+        return id;
     }
 }

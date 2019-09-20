@@ -21,4 +21,8 @@ public interface UserService {
     void sendMessage(User user);
 
     List<User> getUserListWithoutAdmin();
+
+    int findUserIdByCode(String code);
+
+    int findCurrentUserIdByEmail();
 }

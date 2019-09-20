@@ -47,11 +47,11 @@
 </table>
 
 <c:if test="${empty user.posts}">
-    <h2><a href="/addPost/${user.id}">Add post</a></h2>
+    <h2><a href="/post/add">Add post</a></h2>
 </c:if>
 <c:if test="${!empty user.posts}">
     <h1>Posts</h1>
-    <h2><a href="/addPost/${user.id}">Add post</a></h2>
+    <h2><a href="/post/add">Add post</a></h2>
 
     <table>
         <tr>
@@ -66,9 +66,9 @@
                 <td>${post.title}</td>
                 <td>${post.createdAt}</td>
                 <td>
-                    <a href="/editPost/${post.id}">Edit</a>
+                    <a href="/post/edit/${post.id}">Edit</a>
                     |
-                    <a href="/deletePost/${post.id}">Delete</a>
+                    <a href="/post/delete/${post.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>

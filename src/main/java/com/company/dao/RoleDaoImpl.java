@@ -19,7 +19,7 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public Role getRoleById(int id) {
+    public Role getById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Role.class, id);
     }

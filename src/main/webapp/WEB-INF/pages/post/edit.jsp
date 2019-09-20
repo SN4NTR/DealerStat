@@ -11,7 +11,7 @@
     <title>Edit Post</title>
 </head>
 <body>
-<form action="/editPost" method="post">
+<form action="/post/edit" method="post">
     <input type="hidden" name="id" value="${post.id}">
     <label for="title">Title</label>
     <input type="text" name="title" id="title">
