@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService {
     private final MailService mailService;
     private final Environment env;
 
+    public static int userIdBuffer;
+
     @Autowired
     public UserServiceImpl(UserDao userDao,
                            RoleDao roleDao,

@@ -27,7 +27,7 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public void addComment(Comment comment) {
+    public void saveComment(Comment comment) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(comment);
     }

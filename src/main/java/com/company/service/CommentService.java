@@ -8,11 +8,13 @@ public interface CommentService {
 
     Comment getById(int id);
 
-    void addComment(Comment comment);
+    void saveComment(Comment comment);
 
     void deleteComment(Comment comment);
 
     List<Comment> getAllComments();
 
     void updateComment(Comment comment);
+
+    List<Comment> getNotApprovedCommentList();
 }

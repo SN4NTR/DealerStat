@@ -8,7 +8,7 @@ public interface CommentDao {
 
     Comment getById(int id);
 
-    void addComment(Comment comment);
+    void saveComment(Comment comment);
 
     void deleteComment(Comment comment);
 
