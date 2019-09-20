@@ -87,7 +87,7 @@ public class LoginController {
             return modelAndView;
         }
 
-        userService.addUser(user);
+        userService.saveUser(user);
 
         modelAndView.setViewName("redirect:/login?activationCode=true");
         return modelAndView;

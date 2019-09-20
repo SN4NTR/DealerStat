@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
+    public void saveUser(User user) {
         user.setCreatedAt(new Date(new java.util.Date().getTime()));
         Set<Role> roles = new HashSet<>();
         roles.add(roleDao.getRoleById(2));
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
         mailService.sendMessage(user.getEmail(), "Activation code", message);
 
-        userDao.addUser(user);
+        userDao.saveUser(user);
     }
 
     @Override
@@ -81,11 +81,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(int id) {
         return userDao.getById(id);
-    }
-
-    @Override
-    public List<Role> getRoles() {
-        return userDao.getRoles();
     }
 
     @Override

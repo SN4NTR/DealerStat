@@ -1,6 +1,5 @@
 package com.company.dao;
 
-import com.company.model.Role;
 import com.company.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,7 +28,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void addUser(User user) {
+    public void saveUser(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(user);
     }
@@ -51,12 +50,5 @@ public class UserDaoImpl implements UserDao {
     public User getById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(User.class, id);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Role> getRoles() {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from User").list();
     }
 }
