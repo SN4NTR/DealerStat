@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         user.setActivationCode(UUID.randomUUID().toString());
         String message = String.format(
                 "%s, welcome to our platform!\n" +
-                        "To activate your profile, visit next link: http://localhost:8080/activate/%s",
+                        "To activate your profile, visit next link: http://localhost:8080/activateEmail/%s",
                 user.getFirstName(), user.getActivationCode()
         );
         mailService.sendMessage(user.getEmail(), "Activation code", message);
@@ -82,13 +82,14 @@ public class UserServiceImpl implements UserService {
         userDao.updateUser(user);
     }
 
+    @Override
     public void sendMessage(User user) {
         user.setActivationCode(UUID.randomUUID().toString());
         userDao.updateUser(user);
 
         String message = String.format(
                 "Hello, %s!\n" +
-                        "To reset your password, visit next link: http://localhost:8080/activate/%s",
+                        "To reset your password, visit next link: http://localhost:8080/activatePassword/%s",
                 user.getFirstName(), user.getActivationCode()
         );
         mailService.sendMessage(user.getEmail(), "Resetting Password", message);

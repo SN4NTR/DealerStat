@@ -46,7 +46,7 @@ public class LoginController {
             message = "Submit your email";
         }
         if ("false".equals(activation)) {
-            message = "Action is submitted";
+            message = "Email is submitted";
         }
         if (resetPassword != null) {
             message = "Submit resetting password on email";
@@ -93,8 +93,8 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/activate/{code}", method = RequestMethod.GET)
-    public ModelAndView activate(@PathVariable("code") String code) {
+    @RequestMapping(value = "/activateEmail/{code}", method = RequestMethod.GET)
+    public ModelAndView activateEmail(@PathVariable("code") String code) {
         userService.activateUser(code);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -136,6 +136,31 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/activatePassword/{code}", method = RequestMethod.GET)
+    public ModelAndView activatePassword(@PathVariable("code") String code) {
+        User user = userService.getById(findUserIdByCode(code));
+        userService.activateUser(code);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("newPassword");
+        return modelAndView;
+    }
+
+    private int findUserIdByCode(String code) {
+        int userId = 0;
+
+        List<User> userList = userService.getAllUsers();
+        for (User user : userList) {
+            if (code.equals(user.getActivationCode())) {
+                userId = user.getId();
+                break;
+            }
+        }
+
+        return userId;
     }
 
     private int findUserIdByEmail(String email) {
