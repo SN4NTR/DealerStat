@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<User> users = userService.getAllUsers();
         User user = new User();
         for (User u : users) {
-            if (email.equals(u.getEmail())) {
+            if (email.equals(u.getEmail()) && u.getActivationCode() == null) {
                 user = u;
                 break;
             }
