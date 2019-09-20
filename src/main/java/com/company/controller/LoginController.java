@@ -31,7 +31,8 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error,
                               @RequestParam(value = "logout", required = false) String logout,
-                              @RequestParam(value = "activationCode", required = false) String code) {
+                              @RequestParam(value = "activationCode", required = false) String activation,
+                              @RequestParam(value = "resetPassword", required = false) String resetPassword) {
         ModelAndView modelAndView = new ModelAndView();
         String message = null;
 
@@ -41,11 +42,14 @@ public class LoginController {
         if (logout != null) {
             message = "Logged out successfully";
         }
-        if ("true".equals(code)) {
+        if ("true".equals(activation)) {
             message = "Submit your email";
         }
-        if ("false".equals(code)) {
-            message = "Email is submitted";
+        if ("false".equals(activation)) {
+            message = "Action is submitted";
+        }
+        if (resetPassword != null) {
+            message = "Submit resetting password on email";
         }
 
         modelAndView.setViewName("login");
@@ -110,20 +114,15 @@ public class LoginController {
     @RequestMapping(value = "/resetPasswordForm", method = RequestMethod.GET)
     public ModelAndView resetPassword(@ModelAttribute("user") User user) {
         ModelAndView modelAndView = new ModelAndView();
-        User tempUser = new User();
 
-        List<User> userList = userService.getAllUsers();
-        for (User u : userList) {
+        User tempUser = userService.getById(findUserIdByEmail(user.getEmail()));
+        if (tempUser == null) {
             modelAndView.setViewName("redirect:/resetPassword");
-
-            if (u.getEmail().equals(user.getEmail())) {
-                modelAndView.setViewName("newPassword");
-                tempUser = userService.getById(findUserIdByEmail(user.getEmail()));
-                break;
-            }
+        } else {
+            userService.sendMessage(tempUser);
+            modelAndView.setViewName("redirect:/login?resetPassword=true");
         }
 
-        modelAndView.addObject("user", tempUser);
         return modelAndView;
     }
 

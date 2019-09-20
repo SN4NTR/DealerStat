@@ -82,6 +82,18 @@ public class UserServiceImpl implements UserService {
         userDao.updateUser(user);
     }
 
+    public void sendMessage(User user) {
+        user.setActivationCode(UUID.randomUUID().toString());
+        userDao.updateUser(user);
+
+        String message = String.format(
+                "Hello, %s!\n" +
+                        "To reset your password, visit next link: http://localhost:8080/activate/%s",
+                user.getFirstName(), user.getActivationCode()
+        );
+        mailService.sendMessage(user.getEmail(), "Resetting Password", message);
+    }
+
     private int findUserIdByCode(String code) {
         int userId = 0;
 

@@ -20,4 +20,6 @@ public interface UserService {
     List<Role> getRoles();
 
     void activateUser(String code);
+
+    void sendMessage(User user);
 }
