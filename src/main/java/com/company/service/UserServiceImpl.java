@@ -5,29 +5,36 @@ import com.company.dao.UserDao;
 import com.company.model.Role;
 import com.company.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
+@PropertySource(value = "classpath:mail.properties")
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
     private final RoleDao roleDao;
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
+    private final Environment env;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, RoleDao roleDao, PasswordEncoder passwordEncoder, MailService mailService) {
+    public UserServiceImpl(UserDao userDao,
+                           RoleDao roleDao,
+                           PasswordEncoder passwordEncoder,
+                           MailService mailService,
+                           Environment env) {
+
         this.userDao = userDao;
         this.roleDao = roleDao;
         this.passwordEncoder = passwordEncoder;
         this.mailService = mailService;
+        this.env = env;
     }
 
     @Override
@@ -46,9 +53,13 @@ public class UserServiceImpl implements UserService {
         user.setActivationCode(UUID.randomUUID().toString());
         String message = String.format(
                 "%s, welcome to our platform!\n" +
-                        "To activate your profile, visit next link: http://localhost:8080/activateEmail/%s",
-                user.getFirstName(), user.getActivationCode()
+                        "To activate your profile, visit next link:\n" +
+                        "%s/activateEmail/%s",
+                user.getFirstName(),
+                env.getRequiredProperty("dealer.stat.url"),
+                user.getActivationCode()
         );
+
         mailService.sendMessage(user.getEmail(), "Activation code", message);
 
         userDao.addUser(user);
@@ -61,6 +72,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
+        user.setRoles(userDao.getById(user.getId()).getRoles());
+        user.setPosts(userDao.getById(user.getId()).getPosts());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.updateUser(user);
     }
@@ -89,19 +102,40 @@ public class UserServiceImpl implements UserService {
 
         String message = String.format(
                 "Hello, %s!\n" +
-                        "To reset your password, visit next link: http://localhost:8080/activatePassword/%s",
-                user.getFirstName(), user.getActivationCode()
+                        "To reset your password, visit next link:\n" +
+                        "%s/activatePassword/%s",
+                user.getFirstName(),
+                env.getRequiredProperty("dealer.stat.url"),
+                user.getActivationCode()
         );
+
         mailService.sendMessage(user.getEmail(), "Resetting Password", message);
     }
 
-    private int findUserIdByCode(String code) {
+    @Override
+    public List<User> getUserListWithoutAdmin() {
+        List<User> userList = userDao.getAllUsers();
+        List<User> result = new ArrayList<>();
+
+        for (User u : userList) {
+            if ("admin".equals(u.getEmail()) || "guest".equals(u.getEmail())) {
+                continue;
+            }
+
+            result.add(u);
+        }
+
+        return result;
+    }
+
+    public int findUserIdByCode(String code) {
         int userId = 0;
 
         List<User> userList = userDao.getAllUsers();
         for (User user : userList) {
             if (code.equals(user.getActivationCode())) {
                 userId = user.getId();
+                break;
             }
         }
 

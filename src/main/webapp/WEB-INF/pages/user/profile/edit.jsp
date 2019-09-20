@@ -15,7 +15,7 @@
 <body>
 <h2>Account Settings</h2>
 
-<form action="/editUser" method="post">
+<form action="/user/edit" method="post">
     <input type="hidden" name="id" value="${user.id}">
     <input type="date" name="createdAt" value="${user.createdAt}" hidden>
     <table>

@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 public class UserController {
 
@@ -23,34 +20,23 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = {"/users", "/"}, method = RequestMethod.GET)
     public ModelAndView getAllUsers() {
-        List<User> userList = userService.getAllUsers();
-        List<User> withoutAdminUserList = new ArrayList<>();
-        for (User u : userList) {
-            if ("admin".equals(u.getEmail()) || "guest".equals(u.getEmail())) {
-                continue;
-            }
-
-            withoutAdminUserList.add(u);
-        }
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/users");
-        modelAndView.addObject("userList", withoutAdminUserList);
+        modelAndView.addObject("userList", userService.getUserListWithoutAdmin());
         return modelAndView;
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public ModelAndView getUser(@PathVariable("id") int id) {
-        User user = userService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/user");
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("user", userService.getById(id));
         return modelAndView;
     }
 
-    @RequestMapping(value = "/editUser/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/edit/{id}", method = RequestMethod.GET)
     public ModelAndView editUser(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/profile/edit");
@@ -58,21 +44,21 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/editUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/edit", method = {RequestMethod.PUT, RequestMethod.POST})
     public ModelAndView editUser(@ModelAttribute("user") User user) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/user/" + user.getId());
-        user.setRoles(userService.getById(user.getId()).getRoles());
-        user.setPosts(userService.getById(user.getId()).getPosts());
         userService.updateUser(user);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/profile/" + user.getId());
         return modelAndView;
     }
 
-    @RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
     public ModelAndView deleteUser(@PathVariable("id") int id) {
+        userService.deleteUser(userService.getById(id));
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/login?logout=true");
-        userService.deleteUser(userService.getById(id));
         return modelAndView;
     }
 }

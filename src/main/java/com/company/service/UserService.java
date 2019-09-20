@@ -22,4 +22,6 @@ public interface UserService {
     void activateUser(String code);
 
     void sendMessage(User user);
+
+    List<User> getUserListWithoutAdmin();
 }

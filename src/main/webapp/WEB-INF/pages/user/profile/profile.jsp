@@ -39,9 +39,9 @@
         <td>${user.email}</td>
         <td>${user.createdAt}</td>
         <td>
-            <a href="/editUser/${user.id}">Edit</a>
+            <a href="/user/edit/${user.id}">Edit</a>
             |
-            <a href="/deleteUser/${user.id}">Delete</a>
+            <a href="/user/delete/${user.id}">Delete</a>
         </td>
     </tr>
 </table>

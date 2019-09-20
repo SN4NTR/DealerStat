@@ -46,7 +46,7 @@
                 <td>${role.name}</td>
             </c:forEach>
             <td>
-                <a href="/deleteUser/${user.id}">Delete</a>
+                <a href="/user/delete/${user.id}">Delete</a>
             </td>
         </tr>
     </c:forEach>
