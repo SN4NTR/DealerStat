@@ -16,7 +16,7 @@
 <p>3. Fifa</p>
 <p>4. Team Fortress</p>
 <body>
-<form action="/addGame" method="post">
+<form action="/game/add" method="post">
     <label for="id">Your choice</label>
     <input type="text" name="id" id="id">
     <br><br>

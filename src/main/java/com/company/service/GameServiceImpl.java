@@ -12,12 +12,14 @@ import java.util.List;
 public class GameServiceImpl implements GameService {
 
     private GameDao gameDao;
+    private GameObjectService gameObjectService;
 
     public static int gameObjectIdBuffer;
 
     @Autowired
-    public GameServiceImpl(GameDao gameDao) {
+    public GameServiceImpl(GameDao gameDao, GameObjectService gameObjectService) {
         this.gameDao = gameDao;
+        this.gameObjectService = gameObjectService;
     }
 
     @Override
@@ -28,5 +30,12 @@ public class GameServiceImpl implements GameService {
     @Override
     public List<GameObject> getGameObjectsByGameId(int id) {
         return gameDao.getGameObjectsByGameId(id);
+    }
+
+    @Override
+    public GameObject getGameObjectWithGame(Game game) {
+        GameObject gameObject = gameObjectService.getById(gameObjectIdBuffer);
+        gameObject.setGame(gameDao.getById(game.getId()));
+        return gameObject;
     }
 }

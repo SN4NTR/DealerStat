@@ -10,4 +10,6 @@ public interface GameService {
     Game getById(int id);
 
     List<GameObject> getGameObjectsByGameId(int id);
+
+    GameObject getGameObjectWithGame(Game game);
 }

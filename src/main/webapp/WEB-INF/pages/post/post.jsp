@@ -60,7 +60,7 @@
                 <td>${gameObject.createdAt}</td>
                 <td>${gameObject.updatedAt}</td>
                 <td>
-                    <a href="/showGameObjectsByGameId/${gameObject.game.id}">${gameObject.game.name}</a>
+                    <a href="/game/gameObjects/${gameObject.game.id}">${gameObject.game.name}</a>
                 </td>
             </tr>
         </c:forEach>
