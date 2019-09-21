@@ -15,4 +15,6 @@ public interface PostService {
     void updatePost(Post post);
 
     Post getById(int id);
+
+    int findPostIdByGameObjectId(int gameObjectId);
 }

@@ -1,6 +1,7 @@
 package com.company.service;
 
 import com.company.dao.PostDao;
+import com.company.model.GameObject;
 import com.company.model.Post;
 import com.company.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,24 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post getById(int id) {
         return postDao.getById(id);
+    }
+
+    @Override
+    public int findPostIdByGameObjectId(int gameObjectId) {
+        int postId = 0;
+        List<Post> posts = postDao.getAllPosts();
+
+        for (Post p : posts) {
+            Set<GameObject> gameObjects = p.getGameObjects();
+
+            for (GameObject go : gameObjects) {
+                if (go.getId() == gameObjectId) {
+                    postId = p.getId();
+                    break;
+                }
+            }
+        }
+
+        return postId;
     }
 }

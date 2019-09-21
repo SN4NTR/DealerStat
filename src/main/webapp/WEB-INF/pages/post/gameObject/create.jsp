@@ -11,7 +11,7 @@
     <title>Create Game Object</title>
 </head>
 <body>
-<form action="/addGameObject" method="post">
+<form action="/gameObject/add" method="post">
     <label for="title">Title</label>
     <input type="text" name="title" id="title">
     <br><br>

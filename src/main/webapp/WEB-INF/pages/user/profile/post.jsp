@@ -64,9 +64,9 @@
                     <a href="/showGameObjectsByGameId/${gameObject.game.id}">${gameObject.game.name}</a>
                 </td>
                 <td>
-                    <a href="/editGameObject/${gameObject.id}">Edit</a>
+                    <a href="/gameObject/edit/${gameObject.id}">Edit</a>
                     |
-                    <a href="/deleteGameObject/${gameObject.id}">Delete</a>
+                    <a href="/gameObject/delete/${gameObject.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
@@ -74,6 +74,6 @@
 </c:if>
 
 <br>
-<a href="/addGameObject/${post.id}">Add game object</a>
+<a href="/gameObject/add/${post.id}">Add game object</a>
 </body>
 </html>

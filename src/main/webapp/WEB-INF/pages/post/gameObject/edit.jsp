@@ -11,7 +11,7 @@
     <title>Edit Game Object</title>
 </head>
 <body>
-<form action="/editGameObject" method="post">
+<form action="/gameObject/edit" method="post">
     <input name="id" value="${gameObject.id}" hidden>
     <label for="title">Title</label>
     <input type="text" name="title" id="title">

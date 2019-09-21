@@ -19,11 +19,11 @@ import java.util.*;
 @PropertySource(value = "classpath:mail.properties")
 public class UserServiceImpl implements UserService {
 
-    private final UserDao userDao;
-    private final RoleDao roleDao;
-    private final PasswordEncoder passwordEncoder;
-    private final MailService mailService;
-    private final Environment env;
+    private UserDao userDao;
+    private RoleDao roleDao;
+    private PasswordEncoder passwordEncoder;
+    private MailService mailService;
+    private Environment env;
 
     public static int userIdBuffer;
 

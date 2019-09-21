@@ -90,7 +90,7 @@
                 <td>${comment.id}</td>
                 <td>${comment.message}</td>
                 <td>${comment.createdAt}</td>
-                <td><a href="/deleteComment/${comment.id}">Delete</a></td>
+                <td><a href="/comment/delete/${comment.id}">Delete</a></td>
             </tr>
         </c:forEach>
     </table>

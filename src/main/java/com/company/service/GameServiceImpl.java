@@ -13,6 +13,8 @@ public class GameServiceImpl implements GameService {
 
     private GameDao gameDao;
 
+    public static int gameObjectIdBuffer;
+
     @Autowired
     public GameServiceImpl(GameDao gameDao) {
         this.gameDao = gameDao;
@@ -21,11 +23,6 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game getById(int id) {
         return gameDao.getById(id);
-    }
-
-    @Override
-    public List<Game> getAllGames() {
-        return gameDao.getAllGames();
     }
 
     @Override

@@ -9,7 +9,5 @@ public interface GameService {
 
     Game getById(int id);
 
-    List<Game> getAllGames();
-
     List<GameObject> getGameObjectsByGameId(int id);
 }

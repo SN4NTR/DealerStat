@@ -5,6 +5,7 @@ import com.company.model.GameObject;
 import com.company.model.Post;
 import com.company.service.GameObjectService;
 import com.company.service.GameService;
+import com.company.service.GameServiceImpl;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,6 @@ public class GameController {
     private GameService gameService;
     private GameObjectService gameObjectService;
 
-    @Getter
-    @Setter
-    private static int gameObjectIdBuffer;
-
     @Autowired
     public GameController(GameService gameService, GameObjectService gameObjectService) {
         this.gameService = gameService;
@@ -35,8 +32,7 @@ public class GameController {
 
     @RequestMapping(value = "/addGame", method = RequestMethod.POST)
     public ModelAndView addGame(@ModelAttribute("game") Game game) {
-        GameObject gameObject = gameObjectService.getById(gameObjectIdBuffer);
-        gameObject.setPosts(gameObjectService.getById(gameObjectIdBuffer).getPosts());
+        GameObject gameObject = gameObjectService.getById(GameServiceImpl.gameObjectIdBuffer);
         gameObject.setGame(gameService.getById(game.getId()));
         gameObjectService.updateGameObject(gameObject);
 
@@ -46,7 +42,7 @@ public class GameController {
             Set<GameObject> gameObjects = p.getGameObjects();
 
             for (GameObject go : gameObjects) {
-                if (go.getId() == gameObjectIdBuffer) {
+                if (go.getId() == GameServiceImpl.gameObjectIdBuffer) {
                     postId = p.getId();
                     break;
                 }
