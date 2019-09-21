@@ -23,6 +23,7 @@ public class AdminController {
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ModelAndView getAllUsers() {
         List<User> userList = userService.getAllUsers();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/users");
         modelAndView.addObject("userList", userList);

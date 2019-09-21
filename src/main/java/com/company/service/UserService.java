@@ -22,6 +22,8 @@ public interface UserService {
 
     List<User> getUserListWithoutAdmin();
 
+    int findUserIdByEmail(String email);
+
     int findUserIdByCode(String code);
 
     int findCurrentUserIdByEmail();

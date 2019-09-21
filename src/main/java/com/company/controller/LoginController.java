@@ -14,13 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @Controller
 public class LoginController {
 
-    private final UserService userService;
-    private final UserValidator userValidator;
+    private UserService userService;
+    private UserValidator userValidator;
 
     @Autowired
     public LoginController(UserService userService, UserValidator userValidator) {
@@ -57,7 +56,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout", method = {RequestMethod.PUT, RequestMethod.GET})
     public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
@@ -93,7 +92,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/activateEmail/{code}", method = RequestMethod.GET)
+    @RequestMapping(value = "/activateEmail/{code}", method = {RequestMethod.PUT, RequestMethod.GET})
     public ModelAndView activateEmail(@PathVariable("code") String code) {
         userService.activateUser(code);
 
@@ -104,18 +103,17 @@ public class LoginController {
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
     public ModelAndView resetPassword() {
-        User user = new User();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("resetPassword");
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
-    @RequestMapping(value = "/resetPasswordForm", method = RequestMethod.GET)
+    @RequestMapping(value = "/resetPasswordForm", method = {RequestMethod.PUT, RequestMethod.GET})
     public ModelAndView resetPassword(@ModelAttribute("user") User user) {
         ModelAndView modelAndView = new ModelAndView();
 
-        User tempUser = userService.getById(findUserIdByEmail(user.getEmail()));
+        User tempUser = userService.getById(userService.findUserIdByEmail(user.getEmail()));
         if (tempUser == null) {
             modelAndView.setViewName("redirect:/resetPassword");
         } else {
@@ -128,9 +126,10 @@ public class LoginController {
 
     @RequestMapping(value = "/setNewPassword", method = RequestMethod.POST)
     public ModelAndView setNewPassword(@ModelAttribute("user") User user) {
-        User tempUser = userService.getById(findUserIdByEmail(user.getEmail()));
+        User tempUser = userService.getById(userService.findUserIdByEmail(user.getEmail()));
         tempUser.setPassword(user.getPassword());
         tempUser.setConfirmPassword(user.getConfirmPassword());
+
         userService.updateUser(tempUser);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -140,39 +139,12 @@ public class LoginController {
 
     @RequestMapping(value = "/activatePassword/{code}", method = RequestMethod.GET)
     public ModelAndView activatePassword(@PathVariable("code") String code) {
-        User user = userService.getById(findUserIdByCode(code));
+        User user = userService.getById(userService.findUserIdByCode(code));
         userService.activateUser(code);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
         modelAndView.setViewName("newPassword");
         return modelAndView;
-    }
-
-    private int findUserIdByCode(String code) {
-        int userId = 0;
-
-        List<User> userList = userService.getAllUsers();
-        for (User user : userList) {
-            if (code.equals(user.getActivationCode())) {
-                userId = user.getId();
-                break;
-            }
-        }
-
-        return userId;
-    }
-
-    private int findUserIdByEmail(String email) {
-        int userId = 0;
-
-        List<User> userList = userService.getAllUsers();
-        for (User user : userList) {
-            if (email.equals(user.getEmail())) {
-                userId = user.getId();
-            }
-        }
-
-        return userId;
     }
 }

@@ -24,15 +24,10 @@ public class ProfileController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView profile() {
-        ModelAndView modelAndView = new ModelAndView();
-
         int userId = userService.findCurrentUserIdByEmail();
-        if ("guest".equals(userService.getById(userId).getEmail())) {
-            modelAndView.setViewName("redirect:/");
-        } else {
-            modelAndView.setViewName("redirect:/profile/" + userId);
-        }
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/profile/" + userId);
         return modelAndView;
     }
 

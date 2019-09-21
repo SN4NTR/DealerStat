@@ -143,6 +143,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int findUserIdByEmail(String email) {
+        int userId = 0;
+
+        List<User> userList = userDao.getAllUsers();
+        for (User user : userList) {
+            if (email.equals(user.getEmail())) {
+                userId = user.getId();
+            }
+        }
+
+        return userId;
+    }
+
+    @Override
     public int findCurrentUserIdByEmail() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         int id = 0;
