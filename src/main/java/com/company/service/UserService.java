@@ -27,4 +27,8 @@ public interface UserService {
     int findUserIdByCode(String code);
 
     int findCurrentUserIdByEmail();
+
+    List<User> ascendingRating();
+
+    List<User> descendingRating();
 }

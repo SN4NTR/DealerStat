@@ -4,10 +4,7 @@ import com.company.model.User;
 import com.company.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -21,10 +18,18 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/users", "/"}, method = RequestMethod.GET)
-    public ModelAndView getAllUsers() {
+    public ModelAndView getAllUsers(@RequestParam(value = "rating", required = false) String rating) {
         ModelAndView modelAndView = new ModelAndView();
+
+        if ("min".equals(rating)) {
+            modelAndView.addObject("userList", userService.ascendingRating());
+        } else if ("max".equals(rating)) {
+            modelAndView.addObject("userList", userService.descendingRating());
+        } else {
+            modelAndView.addObject("userList", userService.getUserListWithoutAdmin());
+        }
+
         modelAndView.setViewName("user/users");
-        modelAndView.addObject("userList", userService.getUserListWithoutAdmin());
         return modelAndView;
     }
 

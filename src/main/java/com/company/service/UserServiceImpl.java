@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @PropertySource(value = "classpath:mail.properties")
@@ -76,6 +77,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
+        user.setRating(userDao.getById(user.getId()).getRating());
         user.setRoles(userDao.getById(user.getId()).getRoles());
         user.setPosts(userDao.getById(user.getId()).getPosts());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -113,62 +115,59 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUserListWithoutAdmin() {
-        List<User> userList = userDao.getAllUsers();
-        List<User> result = new ArrayList<>();
-
-        for (User u : userList) {
-            if ("admin".equals(u.getEmail()) || "guest".equals(u.getEmail())) {
-                continue;
-            }
-
-            result.add(u);
-        }
-
-        return result;
+        return userDao.getAllUsers()
+                .stream()
+                .filter(user -> !"admin".equals(user.getEmail()) && !"guest".equals(user.getEmail()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public int findUserIdByCode(String code) {
-        int id = 0;
+        Optional<User> userOptional = userDao.getAllUsers()
+                .stream()
+                .filter(user -> code.equals(user.getActivationCode()))
+                .findFirst();
 
-        List<User> userList = userDao.getAllUsers();
-        for (User user : userList) {
-            if (code.equals(user.getActivationCode())) {
-                id = user.getId();
-                break;
-            }
-        }
-
-        return id;
+        return userOptional.map(User::getId).orElse(0);
     }
 
     @Override
     public int findUserIdByEmail(String email) {
-        int userId = 0;
+        Optional<User> userOptional = userDao.getAllUsers()
+                .stream()
+                .filter(user -> email.equals(user.getEmail()))
+                .findFirst();
 
-        List<User> userList = userDao.getAllUsers();
-        for (User user : userList) {
-            if (email.equals(user.getEmail())) {
-                userId = user.getId();
-            }
-        }
-
-        return userId;
+        return userOptional.map(User::getId).orElse(0);
     }
 
     @Override
     public int findCurrentUserIdByEmail() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        int id = 0;
 
-        List<User> userList = userDao.getAllUsers();
-        for (User u : userList) {
-            if (auth.getName().equals(u.getEmail())) {
-                id = u.getId();
-                break;
-            }
-        }
+        Optional<User> optionalUser = userDao.getAllUsers()
+                .stream()
+                .filter(user -> auth.getName().equals(user.getEmail()))
+                .findFirst();
 
-        return id;
+        return optionalUser.map(User::getId).orElse(0);
+    }
+
+    @Override
+    public List<User> ascendingRating() {
+        return userDao.getAllUsers()
+                .stream()
+                .filter(user -> !"admin".equals(user.getEmail()) && !"guest".equals(user.getEmail()))
+                .sorted(Comparator.comparingDouble(User::getRating))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> descendingRating() {
+        return userDao.getAllUsers()
+                .stream()
+                .filter(user -> !"admin".equals(user.getEmail()) && !"guest".equals(user.getEmail()))
+                .sorted(Comparator.comparingDouble(User::getRating).reversed())
+                .collect(Collectors.toList());
     }
 }

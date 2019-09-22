@@ -22,12 +22,21 @@
 </div>
 
 <h1>Dealers List</h1>
+
+<h3><a href="/posts">Show posts</a></h3>
+<h3>
+    <a href="/users?rating=max">Max rating</a>
+    |
+    <a href="/users?rating=min">Min rating</a>
+</h3>
+
 <table>
     <tr>
         <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>E-mail</th>
+        <th>Rating</th>
         <th>Created At</th>
     </tr>
     <c:forEach var="user" items="${userList}">
@@ -38,12 +47,10 @@
             <td>${user.firstName}</td>
             <td>${user.lastName}</td>
             <td>${user.email}</td>
+            <td>${user.rating}</td>
             <td>${user.createdAt}</td>
         </tr>
     </c:forEach>
 </table>
-
-<br>
-<h3><a href="/posts">Show posts</a></h3>
 </body>
 </html>

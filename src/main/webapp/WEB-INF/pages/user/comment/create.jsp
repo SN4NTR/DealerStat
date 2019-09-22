@@ -14,6 +14,8 @@
 <form action="/comment/add" method="post">
     <label for="message">Message</label>
     <input type="text" name="message" id="message">
+    <label for="rating">Rating</label>
+    <input type="number" name="rating" id="rating">
     <br>
     <input type="submit" value="Submit">
 </form>

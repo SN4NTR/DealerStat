@@ -30,6 +30,7 @@
             <th>ID</th>
             <th>Message</th>
             <th>Created At</th>
+            <th>Rating</th>
             <th>Approved</th>
             <th>Action</th>
         </tr>
@@ -38,6 +39,7 @@
                 <td>${comment.id}</td>
                 <td>${comment.message}</td>
                 <td>${comment.createdAt}</td>
+                <td>${comment.rating}</td>
                 <td>${comment.approved}</td>
                 <td>
                     <a href="/comment/approve/${comment.id}">Approve</a>

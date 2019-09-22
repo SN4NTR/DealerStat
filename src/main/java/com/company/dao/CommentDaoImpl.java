@@ -22,14 +22,12 @@ public class CommentDaoImpl implements CommentDao {
 
     @Override
     public Comment getById(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(Comment.class, id);
+        return sessionFactory.getCurrentSession().get(Comment.class, id);
     }
 
     @Override
     public void saveComment(Comment comment) {
-        Session session = sessionFactory.getCurrentSession();
-        session.persist(comment);
+        sessionFactory.getCurrentSession().persist(comment);
     }
 
     @Override
@@ -42,13 +40,13 @@ public class CommentDaoImpl implements CommentDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<Comment> getAllComments() {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Comment").list();
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Comment")
+                .list();
     }
 
     @Override
     public void updateComment(Comment comment) {
-        Session session = sessionFactory.getCurrentSession();
-        session.update(comment);
+        sessionFactory.getCurrentSession().update(comment);
     }
 }

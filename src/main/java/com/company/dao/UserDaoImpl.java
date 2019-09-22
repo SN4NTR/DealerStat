@@ -23,14 +23,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from User").list();
+        return sessionFactory.getCurrentSession()
+                .createQuery("from User")
+                .list();
     }
 
     @Override
     public void saveUser(User user) {
-        Session session = sessionFactory.getCurrentSession();
-        session.persist(user);
+        sessionFactory.getCurrentSession().persist(user);
     }
 
     @Override
@@ -42,13 +42,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        Session session = sessionFactory.getCurrentSession();
-        session.update(user);
+        sessionFactory.getCurrentSession().update(user);
     }
 
     @Override
     public User getById(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(User.class, id);
+        return sessionFactory.getCurrentSession().get(User.class, id);
     }
 }

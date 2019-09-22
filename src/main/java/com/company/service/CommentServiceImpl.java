@@ -1,6 +1,7 @@
 package com.company.service;
 
 import com.company.dao.CommentDao;
+import com.company.dao.UserDao;
 import com.company.model.Comment;
 import com.company.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,13 @@ public class CommentServiceImpl implements CommentService {
 
     private CommentDao commentDao;
     private UserService userService;
+    private UserDao userDao;
 
     @Autowired
-    public CommentServiceImpl(CommentDao commentDao, UserService userService) {
+    public CommentServiceImpl(CommentDao commentDao, UserService userService, UserDao userDao) {
         this.commentDao = commentDao;
         this.userService = userService;
+        this.userDao = userDao;
     }
 
     @Override
@@ -45,15 +48,38 @@ public class CommentServiceImpl implements CommentService {
         commentDao.saveComment(comment);
     }
 
+    private double rating(int id) {
+        Set<Comment> comments = userService.getById(id).getComments();
+
+        double result = 0;
+        for (Comment c : comments) {
+            result += c.getRating();
+        }
+
+        return comments.size() > 0 ? result / comments.size() : 0;
+    }
+
     @Override
     public void deleteComment(Comment comment) {
+        int userId = comment.getUser().getId();
+
         commentDao.deleteComment(comment);
+
+        User user = userService.getById(userId);
+        user.setRating(rating(user.getId()));
+        userDao.updateUser(user);
     }
 
     @Override
     public void updateComment(Comment comment) {
         comment.setApproved(true);
         commentDao.updateComment(comment);
+
+        int userId = comment.getUser().getId();
+
+        User user = userService.getById(userId);
+        user.setRating(rating(user.getId()));
+        userDao.updateUser(user);
     }
 
     @Override

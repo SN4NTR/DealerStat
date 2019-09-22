@@ -29,6 +29,7 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>E-mail</th>
+        <th>Rating</th>
         <th>Created At</th>
         <th>Action</th>
     </tr>
@@ -37,6 +38,7 @@
         <td>${user.firstName}</td>
         <td>${user.lastName}</td>
         <td>${user.email}</td>
+        <td>${user.rating}</td>
         <td>${user.createdAt}</td>
         <td>
             <a href="/user/edit/${user.id}">Edit</a>

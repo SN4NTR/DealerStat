@@ -23,14 +23,12 @@ public class PostDaoImpl implements PostDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<Post> getAllPosts() {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Post").list();
+        return sessionFactory.getCurrentSession().createQuery("from Post").list();
     }
 
     @Override
     public void savePost(Post post) {
-        Session session = sessionFactory.getCurrentSession();
-        session.persist(post);
+        sessionFactory.getCurrentSession().persist(post);
     }
 
     @Override
@@ -42,13 +40,11 @@ public class PostDaoImpl implements PostDao {
 
     @Override
     public void updatePost(Post post) {
-        Session session = sessionFactory.getCurrentSession();
-        session.update(post);
+        sessionFactory.getCurrentSession().update(post);
     }
 
     @Override
     public Post getById(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(Post.class, id);
+        return sessionFactory.getCurrentSession().get(Post.class, id);
     }
 }

@@ -24,6 +24,9 @@ public class Comment {
     @Column(name = "approved")
     private boolean approved;
 
+    @Column(name = "rating")
+    private double rating;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;

@@ -1,7 +1,6 @@
 package com.company.dao;
 
 import com.company.model.Role;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,7 +19,6 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Role getById(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(Role.class, id);
+        return sessionFactory.getCurrentSession().get(Role.class, id);
     }
 }

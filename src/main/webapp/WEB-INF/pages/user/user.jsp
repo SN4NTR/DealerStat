@@ -29,6 +29,7 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>E-mail</th>
+        <th>Rating</th>
         <th>Created At</th>
     </tr>
     <tr>
@@ -36,6 +37,7 @@
         <td>${user.firstName}</td>
         <td>${user.lastName}</td>
         <td>${user.email}</td>
+        <td>${user.rating}</td>
         <td>${user.createdAt}</td>
     </tr>
 </table>
@@ -71,6 +73,7 @@
         <tr>
             <th>ID</th>
             <th>Message</th>
+            <th>Rating</th>
             <th>Created At</th>
         </tr>
         <c:forEach var="comment" items="${user.comments}">
@@ -79,6 +82,7 @@
                     <tr>
                         <td>${comment.id}</td>
                         <td>${comment.message}</td>
+                        <td>${comment.rating}</td>
                         <td>${comment.createdAt}</td>
                     </tr>
                 </c:when>

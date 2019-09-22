@@ -20,20 +20,17 @@ public class GameObjectDaoImpl implements GameObjectDao {
 
     @Override
     public GameObject getById(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(GameObject.class, id);
+        return sessionFactory.getCurrentSession().get(GameObject.class, id);
     }
 
     @Override
     public void addGameObject(GameObject gameObject) {
-        Session session = sessionFactory.getCurrentSession();
-        session.persist(gameObject);
+        sessionFactory.getCurrentSession().persist(gameObject);
     }
 
     @Override
     public void updateGameObject(GameObject gameObject) {
-        Session session = sessionFactory.getCurrentSession();
-        session.update(gameObject);
+        sessionFactory.getCurrentSession().update(gameObject);
     }
 
     @Override

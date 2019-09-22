@@ -39,6 +39,9 @@ public class User {
     @Column(name = "created_at")
     private Date createdAt;
 
+    @Column(name = "rating")
+    private double rating;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
