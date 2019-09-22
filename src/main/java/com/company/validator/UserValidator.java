@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class UserValidator implements Validator {
 
-    private final UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserValidator(UserService userService) {
@@ -32,6 +32,7 @@ public class UserValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Required");
+
         List<User> users = userService.getAllUsers();
         for (User u : users) {
             if (u.getEmail().equals(user.getEmail())) {
@@ -41,6 +42,7 @@ public class UserValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "Required");
+
         if (!user.getConfirmPassword().equals(user.getPassword())) {
             errors.rejectValue("confirmPassword", "Different.user.password");
         }

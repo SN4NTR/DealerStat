@@ -25,7 +25,7 @@ public class CommentController {
     public ModelAndView getAllComments() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/comments");
-        modelAndView.addObject("comments", commentService.getNotApprovedCommentList());
+        modelAndView.addObject("comments", commentService.getNotApprovedComments());
         return modelAndView;
     }
 
@@ -51,10 +51,10 @@ public class CommentController {
     @RequestMapping(value = "/comment/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
     public ModelAndView deleteComment(@PathVariable("id") int id) {
         int userId = commentService.getById(id).getUser().getId();
+        commentService.deleteComment(commentService.getById(id));
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/profile/" + userId);
-        commentService.deleteComment(commentService.getById(id));
         return modelAndView;
     }
 

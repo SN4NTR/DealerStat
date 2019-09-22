@@ -18,7 +18,7 @@ import java.util.Set;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserDetailsServiceImpl(UserService userService) {

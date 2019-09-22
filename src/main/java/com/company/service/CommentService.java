@@ -12,9 +12,7 @@ public interface CommentService {
 
     void deleteComment(Comment comment);
 
-    List<Comment> getAllComments();
-
     void updateComment(Comment comment);
 
-    List<Comment> getNotApprovedCommentList();
+    List<Comment> getNotApprovedComments();
 }

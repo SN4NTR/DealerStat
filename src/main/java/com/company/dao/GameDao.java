@@ -9,7 +9,5 @@ public interface GameDao {
 
     Game getById(int id);
 
-    List<Game> getAllGames();
-
     List<GameObject> getGameObjectsByGameId(int id);
 }

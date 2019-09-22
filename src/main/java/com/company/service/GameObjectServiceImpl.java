@@ -57,9 +57,11 @@ public class GameObjectServiceImpl implements GameObjectService {
         if (game != null) {
             gameObject.setGame(game);
         }
+
         gameObject.setPosts(gameObjectDao.getById(gameObject.getId()).getPosts());
         gameObject.setUpdatedAt(new Date(new java.util.Date().getTime()));
         gameObject.setStatus(true);
+
         gameObjectDao.updateGameObject(gameObject);
     }
 

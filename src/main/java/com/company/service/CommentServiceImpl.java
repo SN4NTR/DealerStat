@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -32,12 +32,14 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void saveComment(Comment comment) {
         User user = userService.getById(UserServiceImpl.userIdBuffer);
+
         comment.setUser(user);
         comment.setCreatedAt(new Date(new java.util.Date().getTime()));
         comment.setApproved(false);
 
         Set<Comment> comments = new HashSet<>();
         comments.add(comment);
+
         user.setComments(comments);
 
         commentDao.saveComment(comment);
@@ -49,27 +51,16 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getAllComments() {
-        return commentDao.getAllComments();
-    }
-
-    @Override
     public void updateComment(Comment comment) {
         comment.setApproved(true);
         commentDao.updateComment(comment);
     }
 
     @Override
-    public List<Comment> getNotApprovedCommentList() {
-        List<Comment> allComments = commentDao.getAllComments();
-        List<Comment> result = new ArrayList<>();
-
-        for (Comment c : allComments) {
-            if (!c.isApproved()) {
-                result.add(c);
-            }
-        }
-
-        return result;
+    public List<Comment> getNotApprovedComments() {
+        return commentDao.getAllComments()
+                .stream()
+                .filter(comment -> !comment.isApproved())
+                .collect(Collectors.toList());
     }
 }
