@@ -120,7 +120,7 @@ public class LoginController {
         if (tempUser == null) {
             modelAndView.setViewName("redirect:/password/reset/form");
         } else {
-            userService.sendMessage(tempUser);
+            userService.resetPassword(tempUser);
             modelAndView.setViewName("redirect:/login?resetPassword=true");
         }
 
@@ -138,7 +138,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/password/setNew", method = RequestMethod.POST)
+    @RequestMapping(value = "/password/setNew", method = {RequestMethod.PUT, RequestMethod.POST})
     public ModelAndView setNewPassword(@ModelAttribute("user") User user) {
         User tempUser = userService.getById(userService.findUserIdByEmail(user.getEmail()));
         tempUser.setPassword(user.getPassword());

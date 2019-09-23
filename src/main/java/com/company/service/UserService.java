@@ -18,7 +18,7 @@ public interface UserService {
 
     void activateUser(String code);
 
-    void sendMessage(User user);
+    void resetPassword(User user);
 
     List<User> getUserListWithoutAdmin();
 

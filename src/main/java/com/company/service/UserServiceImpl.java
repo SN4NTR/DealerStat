@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void sendMessage(User user) {
+    public void resetPassword(User user) {
         user.setActivationCode(UUID.randomUUID().toString());
         userDao.updateUser(user);
 
