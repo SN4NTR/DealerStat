@@ -44,7 +44,7 @@
 <h4>
     <a href="/signUp">Sign Up</a>
     |
-    <a href="/resetPassword">Reset Password</a>
+    <a href="/password/reset/form">Reset Password</a>
 </h4>
 </body>
 </html>

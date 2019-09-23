@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -28,14 +28,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        List<User> users = userService.getAllUsers();
-        User user = new User();
-        for (User u : users) {
-            if (email.equals(u.getEmail()) && u.getActivationCode() == null) {
-                user = u;
-                break;
-            }
-        }
+        Optional<User> userOptional = userService.getAllUsers()
+                .stream()
+                .filter(u -> email.equals(u.getEmail()) && u.getActivationCode() == null)
+                .findFirst();
+
+        User user = userOptional.orElseGet(User::new);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 

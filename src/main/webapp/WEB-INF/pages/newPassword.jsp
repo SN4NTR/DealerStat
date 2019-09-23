@@ -11,7 +11,7 @@
     <title>New Password</title>
 </head>
 <body>
-<form action="/setNewPassword" method="post">
+<form action="/password/setNew" method="post">
     <input type="hidden" name="id" value="${user.id}" hidden>
     <input type="text" name="firstName" value="${user.firstName}" hidden>
     <input type="text" name="lastName" value="${user.lastName}" hidden>

@@ -47,8 +47,11 @@ public class LoginController {
         if ("false".equals(activation)) {
             message = "Email is submitted";
         }
-        if (resetPassword != null) {
+        if ("true".equals(resetPassword)) {
             message = "Submit resetting password on email";
+        }
+        if ("false".equals(resetPassword)) {
+            message = "Password has been reset";
         }
 
         modelAndView.setViewName("login");
@@ -92,7 +95,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/activateEmail/{code}", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/email/activate/{code}", method = {RequestMethod.PUT, RequestMethod.GET})
     public ModelAndView activateEmail(@PathVariable("code") String code) {
         userService.activateUser(code);
 
@@ -101,7 +104,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
+    @RequestMapping(value = "/password/reset/form", method = RequestMethod.GET)
     public ModelAndView resetPassword() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("resetPassword");
@@ -109,13 +112,13 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/resetPasswordForm", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/password/reset", method = {RequestMethod.PUT, RequestMethod.GET})
     public ModelAndView resetPassword(@ModelAttribute("user") User user) {
         ModelAndView modelAndView = new ModelAndView();
 
         User tempUser = userService.getById(userService.findUserIdByEmail(user.getEmail()));
         if (tempUser == null) {
-            modelAndView.setViewName("redirect:/resetPassword");
+            modelAndView.setViewName("redirect:/password/reset/form");
         } else {
             userService.sendMessage(tempUser);
             modelAndView.setViewName("redirect:/login?resetPassword=true");
@@ -124,7 +127,18 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/setNewPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/password/activate/{code}", method = RequestMethod.GET)
+    public ModelAndView activatePassword(@PathVariable("code") String code) {
+        User user = userService.getById(userService.findUserIdByCode(code));
+        userService.activateUser(code);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("newPassword");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/password/setNew", method = RequestMethod.POST)
     public ModelAndView setNewPassword(@ModelAttribute("user") User user) {
         User tempUser = userService.getById(userService.findUserIdByEmail(user.getEmail()));
         tempUser.setPassword(user.getPassword());
@@ -133,18 +147,7 @@ public class LoginController {
         userService.updateUser(tempUser);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/activatePassword/{code}", method = RequestMethod.GET)
-    public ModelAndView activatePassword(@PathVariable("code") String code) {
-        User user = userService.getById(userService.findUserIdByCode(code));
-        userService.activateUser(code);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("newPassword");
+        modelAndView.setViewName("redirect:/login?resetPassword=false");
         return modelAndView;
     }
 }

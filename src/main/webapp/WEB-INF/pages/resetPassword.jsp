@@ -11,7 +11,7 @@
     <title>Reset Password</title>
 </head>
 <body>
-<form action="/resetPasswordForm" method="get">
+<form action="/password/reset" method="get">
     <input type="email" name="email" placeholder="User email">
     <input type="submit" value="Submit">
 </form>

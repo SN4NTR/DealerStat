@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         String message = String.format(
                 "%s, welcome to our platform!\n" +
                         "To activate your profile, visit next link:\n" +
-                        "%s/activateEmail/%s",
+                        "%s/email/activate/%s",
                 user.getFirstName(),
                 env.getRequiredProperty("dealer.stat.url"),
                 user.getActivationCode()
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
         String message = String.format(
                 "Hello, %s!\n" +
                         "To reset your password, visit next link:\n" +
-                        "%s/activatePassword/%s",
+                        "%s/password/activate/%s",
                 user.getFirstName(),
                 env.getRequiredProperty("dealer.stat.url"),
                 user.getActivationCode()
