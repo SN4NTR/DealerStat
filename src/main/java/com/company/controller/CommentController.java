@@ -31,7 +31,7 @@ public class CommentController {
 
     @RequestMapping(value = "/comment/add/{id}", method = RequestMethod.GET)
     public ModelAndView addComment(@PathVariable("id") int id) {
-        UserServiceImpl.userIdBuffer = id;
+        UserServiceImpl.setUserIdBuffer(id);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/comment/create");
@@ -44,7 +44,7 @@ public class CommentController {
         commentService.saveComment(comment);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/user/" + UserServiceImpl.userIdBuffer);
+        modelAndView.setViewName("redirect:/user/" + UserServiceImpl.getUserIdBuffer());
         return modelAndView;
     }
 

@@ -3,6 +3,8 @@ package com.company.service;
 import com.company.dao.GameDao;
 import com.company.model.Game;
 import com.company.model.GameObject;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,9 @@ public class GameServiceImpl implements GameService {
     private GameDao gameDao;
     private GameObjectService gameObjectService;
 
-    public static int gameObjectIdBuffer;
+    @Getter
+    @Setter
+    private static int gameObjectIdBuffer;
 
     @Autowired
     public GameServiceImpl(GameDao gameDao, GameObjectService gameObjectService) {

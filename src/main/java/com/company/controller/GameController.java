@@ -33,7 +33,7 @@ public class GameController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/profile/post/" +
-                postService.findPostIdByGameObjectId(GameServiceImpl.gameObjectIdBuffer));
+                postService.findPostIdByGameObjectId(GameServiceImpl.getGameObjectIdBuffer()));
         return modelAndView;
     }
 

@@ -4,6 +4,8 @@ import com.company.dao.GameObjectDao;
 import com.company.model.Game;
 import com.company.model.GameObject;
 import com.company.model.Post;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,9 @@ public class GameObjectServiceImpl implements GameObjectService {
     private GameObjectDao gameObjectDao;
     private PostService postService;
 
-    public static int postIdBuffer;
+    @Getter
+    @Setter
+    private static int postIdBuffer;
 
     @Autowired
     public GameObjectServiceImpl(GameObjectDao gameObjectDao, PostService postService) {
@@ -48,7 +52,7 @@ public class GameObjectServiceImpl implements GameObjectService {
 
         gameObjectDao.addGameObject(gameObject);
 
-        GameServiceImpl.gameObjectIdBuffer = gameObject.getId();
+        GameServiceImpl.setGameObjectIdBuffer(gameObject.getId());
     }
 
     @Override

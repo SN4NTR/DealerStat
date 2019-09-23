@@ -26,7 +26,7 @@ public class GameObjectController {
 
     @RequestMapping(value = "/gameObject/add/{id}", method = RequestMethod.GET)
     public ModelAndView addGameObject(@PathVariable("id") int id) {
-        GameObjectServiceImpl.postIdBuffer = id;
+        GameObjectServiceImpl.setPostIdBuffer(id);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("post/gameObject/create");

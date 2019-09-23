@@ -34,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void saveComment(Comment comment) {
-        User user = userService.getById(UserServiceImpl.userIdBuffer);
+        User user = userService.getById(UserServiceImpl.getUserIdBuffer());
 
         comment.setUser(user);
         comment.setCreatedAt(new Date(new java.util.Date().getTime()));
@@ -46,17 +46,6 @@ public class CommentServiceImpl implements CommentService {
         user.setComments(comments);
 
         commentDao.saveComment(comment);
-    }
-
-    private double rating(int id) {
-        Set<Comment> comments = userService.getById(id).getComments();
-
-        double result = 0;
-        for (Comment c : comments) {
-            result += c.getRating();
-        }
-
-        return comments.size() > 0 ? result / comments.size() : 0;
     }
 
     @Override
@@ -80,6 +69,17 @@ public class CommentServiceImpl implements CommentService {
         User user = userService.getById(userId);
         user.setRating(rating(user.getId()));
         userDao.updateUser(user);
+    }
+
+    private double rating(int id) {
+        Set<Comment> comments = userService.getById(id).getComments();
+
+        double result = 0;
+        for (Comment c : comments) {
+            result += c.getRating();
+        }
+
+        return comments.size() > 0 ? result / comments.size() : 0;
     }
 
     @Override

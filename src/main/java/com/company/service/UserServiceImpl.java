@@ -4,6 +4,8 @@ import com.company.dao.RoleDao;
 import com.company.dao.UserDao;
 import com.company.model.Role;
 import com.company.model.User;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -26,7 +28,9 @@ public class UserServiceImpl implements UserService {
     private MailService mailService;
     private Environment env;
 
-    public static int userIdBuffer;
+    @Getter
+    @Setter
+    private static int userIdBuffer;
 
     @Autowired
     public UserServiceImpl(UserDao userDao,
